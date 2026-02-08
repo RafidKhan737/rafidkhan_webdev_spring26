@@ -1,53 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Philly Cheesesteak Recipe</title>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Philly Cheesesteak Recipe</title>
+  <meta name="description" content="A classic Philly cheesesteak made with thin-sliced beef, caramelized onions, melted cheese, and a toasted hoagie roll." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
 
-  <body>
-    <h1>Philly Cheesesteak</h1>
+<body>
+  <header class="site-header">
+    <a class="logo" href="./">Rafid’s Recipe Site</a>
 
-    <img
-      src="img/philly-cheesesteak.jpg"
-      alt="A Philly cheesesteak sandwich"
-      width="500"
-    />
+    <nav aria-label="Primary navigation">
+      <ul class="nav-list">
+        <li><a href="./">Home</a></li>
+        <li><a href="./about/">About</a></li>
+        <li><a href="./contact/">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <h2>Description</h2>
-    <p>
-      A classic Philly cheesesteak made with thin-sliced beef, caramelized
-      onions, melted cheese, and a toasted hoagie roll.
-    </p>
+  <main class="layout">
+    <article class="recipe">
+      <header class="recipe-header">
+        <h1>Philly Cheesesteak</h1>
+        <p class="subtitle">
+          A classic Philly cheesesteak made with thin-sliced beef, caramelized onions,
+          melted cheese, and a toasted hoagie roll.
+        </p>
+      </header>
 
-    <h2>Ingredients</h2>
-    <ul>
-      <li>Ribeye steak (thinly sliced)</li>
-      <li>Hoagie rolls</li>
-      <li>Provolone or American cheese</li>
-      <li>Onion (sliced)</li>
-      <li>Green bell pepper (optional)</li>
-      <li>Salt</li>
-      <li>Black pepper</li>
-      <li>Garlic powder (optional)</li>
-    </ul>
+      <figure class="hero">
+        <img src="img/philly-cheesesteak.jpg" alt="A Philly cheesesteak sandwich" />
+        <figcaption>Best served hot with melted cheese and toasted bread.</figcaption>
+      </figure>
 
-    <h2>Instructions</h2>
-    <ol>
-      <li>Slice steak very thin (freeze slightly if needed).</li>
-      <li>Heat pan and cook onions (and peppers) until soft.</li>
-      <li>Add steak, season, and cook until browned.</li>
-      <li>Add cheese and let melt over meat.</li>
-      <li>Toast hoagie roll and assemble sandwich.</li>
-    </ol>
+      <section class="meta" aria-label="Recipe details">
+        <h2 class="sr-only">Recipe details</h2>
+        <ul class="meta-list">
+          <li><strong>Prep:</strong> 10 min</li>
+          <li><strong>Cook:</strong> 15 min</li>
+          <li><strong>Servings:</strong> 2</li>
+        </ul>
+      </section>
 
-    <h2>Tips</h2>
-    <ol>
-      <li>Use high heat for best flavor.</li>
-      <li>Serve immediately while hot.</li>
-    </ol>
+      <section class="grid">
+        <section class="card">
+          <h2>Ingredients</h2>
+          <ul>
+            <li>Ribeye steak (thinly sliced)</li>
+            <li>Hoagie rolls</li>
+            <li>Provolone or American cheese</li>
+            <li>Onion (sliced)</li>
+            <li>Green bell pepper (optional)</li>
+            <li>Salt</li>
+            <li>Black pepper</li>
+            <li>Garlic powder (optional)</li>
+          </ul>
+        </section>
 
-    
-  </body>
+        <section class="card">
+          <h2>Instructions</h2>
+          <ol>
+            <li>Slice steak very thin (freeze slightly if needed).</li>
+            <li>Heat a pan and cook onions (and peppers) until soft.</li>
+            <li>Add steak, season, and cook until browned.</li>
+            <li>Add cheese and let it melt over the meat.</li>
+            <li>Toast hoagie roll and assemble the sandwich.</li>
+          </ol>
+        </section>
+      </section>
+
+      <section class="card">
+        <h2>Tips</h2>
+        <ul>
+          <li>Freezing the ribeye for 10–15 minutes makes thin slicing easier.</li>
+          <li>Cook onions low and slow for better caramelization.</li>
+          <li>Provolone is classic, but American melts super smoothly.</li>
+        </ul>
+      </section>
+    </article>
+
+    <aside class="sidebar">
+      <section class="card">
+        <h2>Categories</h2>
+        <ul>
+          <li><a href="#">Sandwiches</a></li>
+          <li><a href="#">Beef</a></li>
+          <li><a href="#">Quick Meals</a></li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Related Recipes</h2>
+        <ul>
+          <li><a href="#">Chicken Cheesesteak</a></li>
+          <li><a href="#">Loaded Fries</a></li>
+          <li><a href="#">Garlic Aioli</a></li>
+        </ul>
+      </section>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 Rafid Khan — Web Dev HW</p>
+  </footer>
+</body>
 </html>
