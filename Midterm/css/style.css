@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* COLORS */
+:root {
+    --barca-red: #a50044;
+    --barca-blue: #004d98;
+    --dark: #0f172a;
+    --light: #ffffff;
+    --gray: #f1f3f6;
+}
+
+/* BODY */
+body {
+    font-family: Inter, sans-serif;
+    background-color: var(--gray);
+    color: var(--dark);
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 50px;
+    background: linear-gradient(90deg, var(--barca-blue), var(--barca-red));
+    color: white;
+}
+
+.navbar .logo {
+    font-family: Montserrat, sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+}
+
+.navbar nav a {
+    margin-left: 25px;
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.navbar nav a:hover {
+    opacity: 0.7;
+}
+
+/* HERO */
+.hero {
+    text-align: center;
+    padding: 120px 20px;
+    background: linear-gradient(135deg, var(--barca-blue), var(--barca-red));
+    color: white;
+}
+
+.hero h1 {
+    font-family: Montserrat, sans-serif;
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+.hero button {
+    padding: 14px 30px;
+    border: none;
+    background: white;
+    color: var(--barca-red);
+    font-weight: 700;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.hero button:hover {
+    transform: translateY(-3px);
+    background: #e5e5e5;
+}
+
+/* TIMELINE GRID */
+.timeline {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    padding: 80px 60px;
+}
+
+/* SEASON CARDS */
+.season-box {
+    background: white;
+    padding: 50px 20px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 18px;
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+    transition: 0.3s ease;
+}
+
+.season-box:hover {
+    background: linear-gradient(135deg, var(--barca-blue), var(--barca-red));
+    color: white;
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 25px;
+    background: var(--dark);
+    color: white;
+    font-size: 14px;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+
+    .timeline {
+        grid-template-columns: 1fr;
+        padding: 50px 20px;
+    }
+
+    .navbar {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+        padding: 20px;
+    }
+
+    .hero {
+        padding: 80px 20px;
+    }
+
+    .hero h1 {
+        font-size: 34px;
+    }
+}
