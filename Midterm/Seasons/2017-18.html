@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2017/18 Kits | FC Barcelona Kit Archive</title>
+
+  <!-- Use the SAME CSS file as the homepage -->
+  <link rel="stylesheet" href="../css/style.css" />
+
+  <!-- Extra styling ONLY for season pages -->
+  <style>
+    .season-page {
+      width: 90%;
+      max-width: 1100px;
+      margin: 40px auto 80px;
+    }
+
+    .season-header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .season-header h1 {
+      font-size: 44px;
+      font-weight: 900;
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .season-header h3 {
+      margin-top: 18px;
+      color: #f6e6a6;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .season-header p {
+      margin-top: 10px;
+      color: #f6e6a6;
+      line-height: 1.7;
+      max-width: 920px;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 14px;
+    }
+
+    .kits-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+      margin-top: 35px;
+    }
+
+    .kit-card {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(246, 230, 166, 0.2);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+      transition: 0.3s ease;
+    }
+
+    /* HOVER EFFECT (CARD FLOAT) */
+    .kit-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 45px rgba(0, 0, 0, 0.35);
+    }
+
+    .kit-card h2 {
+      font-size: 20px;
+      font-weight: 900;
+      color: #f6e6a6;
+      margin-bottom: 14px;
+      letter-spacing: 0.4px;
+    }
+
+    .kit-image {
+      width: 100%;
+      height: 340px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      background: rgba(0, 0, 0, 0.18);
+      overflow: hidden;
+    }
+
+    .kit-image img {
+      max-width: 90%;
+      max-height: 92%;
+      object-fit: contain;
+      display: block;
+      transition: 0.35s ease;
+    }
+
+    /* HOVER EFFECT (IMAGE ZOOM) */
+    .kit-card:hover img {
+      transform: scale(1.08);
+    }
+
+    .kit-notes {
+      margin-top: 14px;
+      color: #f6e6a6;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .nav-buttons {
+      margin-top: 40px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .nav-buttons a {
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .mini-btn {
+      padding: 12px 18px;
+      border-radius: 30px;
+      border: none;
+      background: var(--gold-gradient);
+      color: #111;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-block;
+      text-align: center;
+      min-width: 140px;
+      transition: 0.25s ease;
+    }
+
+    .mini-btn:hover {
+      transform: translateY(-3px);
+    }
+
+    .back-home {
+      margin-top: 18px;
+      text-align: center;
+    }
+
+    .back-home a {
+      color: #f6e6a6;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .back-home a:hover {
+      text-decoration: underline;
+    }
+
+    /* REQUIRED RESPONSIVE MEDIA QUERY */
+    @media (max-width: 768px) {
+      .kits-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .season-header h1 {
+        font-size: 32px;
+      }
+
+      .kit-image {
+        height: 300px;
+      }
+
+      .nav-buttons {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .mini-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">FCB Archive</div>
+
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="#">Timeline</a>
+      <a href="../about.html">About</a>
+    </div>
+  </nav>
+
+  <main class="season-page">
+
+    <!-- TITLE + HISTORICAL CONTEXT -->
+    <section class="season-header">
+      <h1>2017/18 Season</h1>
+      <h3>Historical Context</h3>
+
+      <p>
+        The <strong>2017/18 season</strong> was a year of domestic dominance and transition for FC Barcelona.
+        It was the first season under new head coach <strong>Ernesto Valverde</strong> and the first with
+        <strong>Rakuten</strong> as the club’s main shirt sponsor. The season began with a major shock when
+        star forward <strong>Neymar</strong> left for Paris Saint-Germain in a world-record transfer, forcing
+        Barcelona to rebuild their attack around <strong>Lionel Messi</strong> and <strong>Luis Suárez</strong>.
+        Despite the uncertainty, Barcelona responded with an outstanding domestic campaign, winning both
+        <strong>La Liga</strong> and the <strong>Copa del Rey</strong> to complete a <strong>domestic double</strong>.
+        The team went <strong>unbeaten for most of the league season</strong>, with Messi leading the team in goals
+        and creativity while new signing <strong>Philippe Coutinho</strong> joined midway through the season to strengthen
+        the squad. However, their European campaign ended in disappointment when they were dramatically eliminated by
+        <strong>AS Roma</strong> in the quarterfinals of the UEFA Champions League after a shocking comeback in Rome.
+        Overall, the 2017/18 season is remembered as a year of domestic success and resilience for Barcelona despite
+        major changes and a painful European exit.
+      </p>
+    </section>
+
+    <!-- KITS (HOME, AWAY, THIRD) -->
+    <section class="kits-grid">
+
+      <!-- HOME -->
+      <article class="kit-card">
+        <h2>Home Kit</h2>
+        <div class="kit-image">
+          <img src="../img/2017_18_Home.png" alt="FC Barcelona 2017/18 Home Kit">
+        </div>
+        <p class="kit-notes">
+          The first Rakuten-era home kit—classic blaugrana with modern striping for a clean, updated look.
+        </p>
+      </article>
+
+      <!-- AWAY -->
+      <article class="kit-card">
+        <h2>Away Kit</h2>
+        <div class="kit-image">
+          <img src="../img/2017_18_Away.png" alt="FC Barcelona 2017/18 Away Kit">
+        </div>
+        <p class="kit-notes">
+          A bright, icy away kit designed for maximum contrast—minimal, fresh, and instantly recognizable.
+        </p>
+      </article>
+
+      <!-- THIRD -->
+      <article class="kit-card">
+        <h2>Third Kit</h2>
+        <div class="kit-image">
+          <img src="../img/2017_18_Third.png" alt="FC Barcelona 2017/18 Third Kit">
+        </div>
+        <p class="kit-notes">
+          A deep-toned third kit with subtle texture—bold, premium, and built to stand out in big matches.
+        </p>
+      </article>
+
+    </section>
+
+    <!-- NAV BUTTONS -->
+    <div class="nav-buttons">
+      <a href="2016-17.html" class="mini-btn">← Back</a>
+      <a href="2018-19.html" class="mini-btn">Next →</a>
+    </div>
+
+    <div class="back-home">
+      <a href="../index.html">Return to Home</a>
+    </div>
+
+  </main>
+
+  <footer>
+    © 2026 Rafid Khan | FC Barcelona Kit Archive
+  </footer>
+
+</body>
+
+</html>
