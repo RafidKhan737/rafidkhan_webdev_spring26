@@ -128,6 +128,12 @@ color:#111;
 box-shadow:0 15px 30px rgba(0,0,0,0.25);
 transition:0.25s;
 
+/* IMPORTANT: makes <a class="season-box"> look like boxes */
+text-decoration:none;
+display:flex;
+align-items:center;
+justify-content:center;
+
 }
 
 
@@ -178,5 +184,70 @@ top:160px;
 width:260px;
 opacity:0.8;
 pointer-events:none;
+
+}
+
+
+/* ===========================
+   MOBILE FIXES (HOME PAGE)
+   =========================== */
+
+@media (max-width:768px){
+
+/* NAV spacing */
+nav{
+padding:18px 20px;
+}
+
+.logo{
+font-size:16px;
+}
+
+.nav-links a{
+margin-left:14px;
+font-size:13px;
+}
+
+/* HERO spacing + type */
+.hero{
+padding:90px 16px 50px;
+}
+
+.hero h1{
+font-size:30px;
+line-height:1.1;
+}
+
+.hero p{
+font-size:13px;
+}
+
+/* LOGOS: shrink + fade so they don’t overlap */
+.barca-logo{
+width:120px;
+right:16px;
+top:10px;
+opacity:0.25;
+}
+
+.nike-logo{
+width:140px;
+left:16px;
+top:120px;
+opacity:0.20;
+}
+
+/* Seasons grid on mobile */
+.seasons{
+grid-template-columns:repeat(2,1fr);
+gap:18px;
+padding-bottom:60px;
+}
+
+.season-box{
+padding:22px;
+border-radius:16px;
+font-size:14px;
+}
 
 }
