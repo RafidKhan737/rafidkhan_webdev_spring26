@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2019/20 Kits | FC Barcelona Kit Archive</title>
+
+  <link rel="stylesheet" href="../css/style.css" />
+
+  <style>
+    .season-page {
+      width: 90%;
+      max-width: 1100px;
+      margin: 40px auto 80px;
+    }
+
+    .season-header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .season-header h1 {
+      font-size: 44px;
+      font-weight: 900;
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .season-header h3 {
+      margin-top: 18px;
+      color: #f6e6a6;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .season-header p {
+      margin-top: 10px;
+      color: #f6e6a6;
+      line-height: 1.7;
+      max-width: 920px;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 14px;
+    }
+
+    .kits-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+      margin-top: 35px;
+    }
+
+    .kit-card {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(246, 230, 166, 0.2);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+      transition: 0.3s ease;
+    }
+
+    .kit-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 45px rgba(0, 0, 0, 0.35);
+    }
+
+    .kit-card h2 {
+      font-size: 20px;
+      font-weight: 900;
+      color: #f6e6a6;
+      margin-bottom: 14px;
+      letter-spacing: 0.4px;
+    }
+
+    .kit-image {
+      width: 100%;
+      height: 340px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      background: rgba(0, 0, 0, 0.18);
+      overflow: hidden;
+    }
+
+    .kit-image img {
+      max-width: 90%;
+      max-height: 92%;
+      object-fit: contain;
+      display: block;
+      transition: 0.35s ease;
+    }
+
+    .kit-card:hover img {
+      transform: scale(1.08);
+    }
+
+    .kit-notes {
+      margin-top: 14px;
+      color: #f6e6a6;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .nav-buttons {
+      margin-top: 40px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .nav-buttons a {
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .mini-btn {
+      padding: 12px 18px;
+      border-radius: 30px;
+      border: none;
+      background: var(--gold-gradient);
+      color: #111;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-block;
+      text-align: center;
+      min-width: 140px;
+      transition: 0.25s ease;
+    }
+
+    .mini-btn:hover {
+      transform: translateY(-3px);
+    }
+
+    .back-home {
+      margin-top: 18px;
+      text-align: center;
+    }
+
+    .back-home a {
+      color: #f6e6a6;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .back-home a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .kits-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .season-header h1 {
+        font-size: 32px;
+      }
+
+      .kit-image {
+        height: 300px;
+      }
+
+      .nav-buttons {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .mini-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="logo">FCB Archive</div>
+
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="#">Timeline</a>
+      <a href="../about.html">About</a>
+    </div>
+  </nav>
+
+  <main class="season-page">
+
+    <section class="season-header">
+      <h1>2019/20 Season</h1>
+      <h3>Historical Context</h3>
+
+      <p>
+        The <strong>2019/20 season</strong> was one of the most turbulent seasons in the modern history of
+        <strong>FC Barcelona</strong>. Barcelona began the campaign under coach <strong>Ernesto Valverde</strong>
+        and entered the season as defending La Liga champions, with star players like
+        <strong>Lionel Messi, Luis Suárez, and Antoine Griezmann</strong> leading the squad. Despite inconsistent
+        performances early in the season, Barcelona still managed to stay near the top of the league, but the team
+        struggled with injuries, defensive problems, and criticism over their style of play. After a shocking defeat
+        to <strong>Atlético Madrid</strong> in the 2020 Supercopa de España semi-final, Valverde was dismissed in
+        January 2020 and replaced by <strong>Quique Setién</strong>. Under Setién, Barcelona initially showed flashes
+        of improvement but soon lost momentum, eventually finishing <strong>second in La Liga behind Real Madrid</strong>.
+        The season ended disastrously in Europe when Barcelona suffered an infamous <strong>8–2 defeat to FC Bayern Munich</strong>
+        in the UEFA Champions League quarter-final during the COVID-19-affected tournament in Lisbon, one of the heaviest
+        defeats in the club’s history. The humiliating loss triggered a major crisis at the club, leading to Setién’s dismissal,
+        internal turmoil, and even Messi publicly requesting to leave the club that summer.
+      </p>
+    </section>
+
+    <section class="kits-grid">
+
+      <article class="kit-card">
+        <h2>Home Kit</h2>
+        <div class="kit-image">
+          <img src="../img/2019_20_Home.png" alt="FC Barcelona 2019/20 Home Kit">
+        </div>
+        <p class="kit-notes">
+          A bold home kit with a checkerboard pattern, giving Barça’s traditional colors a modern and controversial twist.
+        </p>
+      </article>
+
+      <article class="kit-card">
+        <h2>Away Kit</h2>
+        <div class="kit-image">
+          <img src="../img/2019_20_Away.png" alt="FC Barcelona 2019/20 Away Kit">
+        </div>
+        <p class="kit-notes">
+          A vibrant yellow away kit with a diagonal blaugrana sash, inspired by bold movement and strong contrast.
+        </p>
+      </article>
+
+      <article class="kit-card">
+        <h2>Third Kit</h2>
+        <div class="kit-image">
+          <img src="../img/2019_20_Third.png" alt="FC Barcelona 2019/20 Third Kit">
+        </div>
+        <p class="kit-notes">
+          A bright turquoise third kit with subtle geometric texture, creating a fresh and energetic alternative look.
+        </p>
+      </article>
+
+      <article class="kit-card">
+        <h2>Fourth Kit</h2>
+        <div class="kit-image">
+          <img src="../img/2019_20_Fourth.png" alt="FC Barcelona 2019/20 Fourth Kit">
+        </div>
+        <p class="kit-notes">
+          A special yellow fourth kit featuring red diagonal striping, paying tribute to Catalan identity and heritage.
+        </p>
+      </article>
+
+    </section>
+
+    <div class="nav-buttons">
+      <a href="2018-19.html" class="mini-btn">← Back</a>
+      <a href="2020-21.html" class="mini-btn">Next →</a>
+    </div>
+
+    <div class="back-home">
+      <a href="../index.html">Return to Home</a>
+    </div>
+
+  </main>
+
+  <footer>
+    © 2026 Rafid Khan | FC Barcelona Kit Archive
+  </footer>
+
+</body>
+
+</html>
