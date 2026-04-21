@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thursday | The Weeknd</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    body.thursday-page {
+      background:
+        radial-gradient(circle at top, rgba(115, 131, 173, 0.08), transparent 28%),
+        linear-gradient(rgba(7, 10, 18, 0.80), rgba(5, 7, 15, 0.95)),
+        url("../images/backgrounds/thursday-bg.jpeg") center/cover no-repeat;
+      color: white;
+      overflow-x: hidden;
+      background-attachment: fixed;
+    }
+
+    .album-page {
+      min-height: 100vh;
+      padding: 2rem 2rem 4rem;
+      position: relative;
+    }
+
+    .album-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .album-topbar a {
+      text-decoration: none;
+      color: white;
+      padding: 0.85rem 1.2rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: 0.3s ease;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.28);
+    }
+
+    .album-topbar a:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(180, 195, 255, 0.24);
+      box-shadow: 0 0 20px rgba(150,170,255,0.08);
+    }
+
+    .album-shell {
+      width: min(1280px, 95%);
+      margin: 0 auto;
+    }
+
+    .album-hero {
+      text-align: left;
+      margin-bottom: 2rem;
+      max-width: 860px;
+    }
+
+    .album-kicker {
+      text-transform: uppercase;
+      letter-spacing: 5px;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 1rem;
+    }
+
+    .album-hero h1 {
+      font-size: clamp(3.2rem, 8vw, 6.2rem);
+      line-height: 0.98;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 18px rgba(160,180,255,0.10);
+    }
+
+    .album-subtitle {
+      max-width: 760px;
+      color: rgba(220,225,255,0.88);
+      line-height: 1.85;
+      font-size: 1.08rem;
+    }
+
+    .main-layout {
+      display: grid;
+      grid-template-columns: 0.88fr 1.12fr;
+      gap: 1.6rem;
+      align-items: start;
+    }
+
+    .glass-panel {
+      background: rgba(255,255,255,0.035);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+    }
+
+    .visual-column {
+      position: sticky;
+      top: 1.5rem;
+    }
+
+    .visual-box {
+  position: relative;
+  min-height: 780px;
+  height: 780px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(120,140,220,0.12), transparent 38%),
+    linear-gradient(to bottom, rgba(120,140,180,0.08), rgba(255,255,255,0.015));
+  box-shadow:
+    0 18px 40px rgba(0,0,0,0.35),
+    inset 0 0 40px rgba(120,140,220,0.06);
+}
+
+#rainCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+    .visual-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% 15%, rgba(180,190,255,0.09), transparent 25%),
+        linear-gradient(to bottom, rgba(255,255,255,0.015), rgba(0,0,0,0.22));
+      pointer-events: none;
+    }
+
+    .visual-quote {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      text-align: center;
+      font-size: clamp(1rem, 1.8vw, 1.45rem);
+      line-height: 1.6;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(225,232,255,0.18);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .visual-caption {
+      position: absolute;
+      left: 1.25rem;
+      bottom: 1.1rem;
+      font-size: 0.92rem;
+      color: rgba(220,225,255,0.7);
+      letter-spacing: 0.2px;
+      pointer-events: none;
+    }
+
+    .right-column {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .intro-card,
+    .themes-panel,
+    .tracks-panel {
+      padding: 1.5rem;
+    }
+
+    .intro-card h2,
+    .themes-panel h2,
+    .tracks-panel h2 {
+      font-size: 1.15rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.3px;
+    }
+
+    .intro-card p,
+    .themes-panel p,
+    .tracks-panel p {
+      color: rgba(220,225,255,0.82);
+      line-height: 1.8;
+      font-size: 0.96rem;
+      margin-bottom: 1rem;
+    }
+
+    .mood-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin-top: 0.25rem;
+    }
+
+    .mood-tag {
+      padding: 0.6rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(170,185,255,0.12);
+      border: 1px solid rgba(210,220,255,0.16);
+      font-size: 0.85rem;
+      color: rgba(240,244,255,0.96);
+      transition: 0.3s ease;
+    }
+
+    .mood-tag:hover {
+      transform: translateY(-2px);
+      background: rgba(190,205,255,0.18);
+      border-color: rgba(220,228,255,0.24);
+      box-shadow: 0 0 16px rgba(170,190,255,0.08);
+    }
+
+    .themes-list {
+      display: grid;
+      gap: 0.9rem;
+      margin-top: 0.8rem;
+    }
+
+    .theme-card {
+      padding: 1rem;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(200,210,255,0.08);
+      transition: 0.3s ease;
+    }
+
+    .theme-card:hover {
+      transform: translateX(6px);
+      background: rgba(180,195,255,0.06);
+      border-color: rgba(210,220,255,0.15);
+    }
+
+    .theme-card strong {
+      display: block;
+      margin-bottom: 0.35rem;
+      font-size: 0.96rem;
+    }
+
+    .theme-card span {
+      color: rgba(220,225,255,0.78);
+      line-height: 1.65;
+      font-size: 0.92rem;
+    }
+
+    .track-list {
+      display: grid;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .track {
+      display: grid;
+      grid-template-columns: 40px 1fr auto;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 0.95rem 1rem;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.035);
+      border: 1px solid rgba(200,210,255,0.06);
+      transition: 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .track::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(170,185,255,0.08), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .track:hover {
+      transform: translateX(6px);
+      background: rgba(170,185,255,0.07);
+      border-color: rgba(210,220,255,0.14);
+      box-shadow: 0 0 18px rgba(150, 170, 255, 0.08);
+    }
+
+    .track:hover::before {
+      opacity: 1;
+    }
+
+    .track-number {
+      color: rgba(210,220,255,0.55);
+      font-size: 0.9rem;
+    }
+
+    .track-title {
+      font-size: 0.97rem;
+      color: rgba(245,247,255,0.95);
+    }
+
+    .track-time {
+      color: rgba(210,220,255,0.55);
+      font-size: 0.88rem;
+    }
+
+    .bottom-nav {
+      display: flex;
+      justify-content: flex-start;
+      margin-top: 0.5rem;
+    }
+
+    .bottom-nav a {
+      text-decoration: none;
+      color: white;
+      padding: 0.95rem 1.35rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.05);
+      transition: 0.3s ease;
+    }
+
+    .bottom-nav a:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.1);
+      box-shadow: 0 0 16px rgba(160,180,255,0.08);
+    }
+
+    @media (max-width: 980px) {
+  .main-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .visual-column {
+    position: static;
+  }
+
+  .visual-box {
+    min-height: 420px;
+    height: 420px;
+  }
+
+  .album-hero {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .bottom-nav {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .album-page {
+    padding: 1.2rem 1rem 2.5rem;
+  }
+
+  .album-topbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .album-hero h1 {
+    font-size: 2.7rem;
+  }
+
+  .album-subtitle {
+    font-size: 1rem;
+  }
+
+  .visual-box {
+    min-height: 340px;
+    height: 340px;
+  }
+
+  .track {
+    grid-template-columns: 28px 1fr;
+  }
+
+  .track-time {
+    display: none;
+  }
+}
+  </style>
+</head>
+<body class="thursday-page">
+  <main class="album-page">
+    <div class="album-topbar">
+      <a href="house-of-balloons.html">← Go back to House of Balloons</a>
+      <a href="echoes-of-silence.html">Enter Echoes of Silence →</a>
+    </div>
+
+    <div class="album-shell">
+      <header class="album-hero">
+        <p class="album-kicker">Album Experience</p>
+        <h1>Thursday</h1>
+        <p class="album-subtitle">
+          Thursday feels like a relationship you know is not real, but you keep returning to it anyway —
+          slow, lonely, emotionally distant, and trapped in a cycle of wanting more while accepting less.
+        </p>
+      </header>
+
+      <section class="main-layout">
+        <div class="visual-column">
+          <div class="visual-box glass-panel">
+            <canvas id="rainCanvas"></canvas>
+            <div class="visual-overlay"></div>
+            <div class="visual-quote">you only matter on thursday — and you keep waiting for it</div>
+            <div class="visual-caption">
+              Thin falling lines repeat like thoughts you cannot stop revisiting.
+            </div>
+          </div>
+        </div>
+
+        <div class="right-column">
+          <section class="intro-card glass-panel">
+            <h2>The Core Feeling</h2>
+            <p>
+              Emotional attachment without commitment. Jealousy, mixed signals, quiet heartbreak,
+              and the exhaustion of being somebody’s option instead of their priority.
+            </p>
+
+            <div class="mood-tags">
+              <div class="mood-tag">Situationship</div>
+              <div class="mood-tag">Jealousy</div>
+              <div class="mood-tag">Mixed signals</div>
+              <div class="mood-tag">Emotional dependency</div>
+              <div class="mood-tag">Quiet heartbreak</div>
+            </div>
+          </section>
+
+          <section class="themes-panel glass-panel">
+            <h2>Sound & Themes</h2>
+            <p>
+              Thursday is slower and more emotionally drained than House of Balloons. Its hazy production,
+              distant vulnerability, and looping atmosphere feel like overthinking in the middle of the night.
+            </p>
+
+            <div class="themes-list">
+              <div class="theme-card">
+                <strong>Lack of commitment</strong>
+                <span>The page reflects being emotionally invested in something unstable and undefined.</span>
+              </div>
+
+              <div class="theme-card">
+                <strong>Repetition and waiting</strong>
+                <span>The looping rain visual mirrors the feeling of returning to the same emotions again and again.</span>
+              </div>
+
+              <div class="theme-card">
+                <strong>Power imbalance</strong>
+                <span>One person always seems to care more, while the other controls the rhythm of the relationship.</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="tracks-panel glass-panel">
+            <h2>Track Atmosphere</h2>
+            <p>
+              These songs feel like one long, quiet night. Hover through them like moments in a cycle that
+              keeps repeating even when you know it should end.
+            </p>
+
+            <div class="track-list">
+              <div class="track"><span class="track-number">1</span><span class="track-title">Lonely Star</span><span class="track-time">5:49</span></div>
+              <div class="track"><span class="track-number">2</span><span class="track-title">Life Of The Party</span><span class="track-time">4:56</span></div>
+              <div class="track"><span class="track-number">3</span><span class="track-title">Thursday</span><span class="track-time">5:20</span></div>
+              <div class="track"><span class="track-number">4</span><span class="track-title">The Zone</span><span class="track-time">6:58</span></div>
+              <div class="track"><span class="track-number">5</span><span class="track-title">The Birds Pt. 1</span><span class="track-time">3:34</span></div>
+              <div class="track"><span class="track-number">6</span><span class="track-title">The Birds Pt. 2</span><span class="track-time">5:50</span></div>
+              <div class="track"><span class="track-number">7</span><span class="track-title">Gone</span><span class="track-time">8:06</span></div>
+              <div class="track"><span class="track-number">8</span><span class="track-title">Rolling Stone</span><span class="track-time">3:50</span></div>
+              <div class="track"><span class="track-number">9</span><span class="track-title">Heaven Or Las Vegas</span><span class="track-time">5:53</span></div>
+            </div>
+          </section>
+
+          <div class="bottom-nav">
+            <a href="echoes-of-silence.html">Continue into Echoes of Silence →</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const canvas = document.getElementById("rainCanvas");
+    const ctx = canvas.getContext("2d");
+    let drops = [];
+    let mouseX = 0;
+
+    function resizeCanvas() {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+      createDrops();
+    }
+
+    function createDrops() {
+      drops = [];
+      const total = 180;
+
+      for (let i = 0; i < total; i++) {
+        drops.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          len: 18 + Math.random() * 34,
+          speed: 1.2 + Math.random() * 2.8,
+          opacity: 0.16 + Math.random() * 0.22,
+          sway: (Math.random() - 0.5) * 0.5
+        });
+      }
+    }
+
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    canvas.addEventListener("mousemove", (e) => {
+      const rect = canvas.getBoundingClientRect();
+      mouseX = e.clientX - rect.left;
+    });
+
+    canvas.addEventListener("mouseleave", () => {
+      mouseX = canvas.width / 2;
+    });
+
+    function drawRain(drop) {
+      const bend = (mouseX - drop.x) * 0.0008;
+
+      ctx.beginPath();
+      ctx.moveTo(drop.x, drop.y);
+      ctx.lineTo(drop.x + bend * 25, drop.y + drop.len);
+      ctx.strokeStyle = `rgba(210, 222, 255, ${drop.opacity})`;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (const drop of drops) {
+        drop.y += drop.speed;
+        drop.x += drop.sway;
+
+        if (drop.y > canvas.height + drop.len) {
+          drop.y = -drop.len;
+          drop.x = Math.random() * canvas.width;
+        }
+
+        if (drop.x < -20) drop.x = canvas.width + 20;
+        if (drop.x > canvas.width + 20) drop.x = -20;
+
+        drawRain(drop);
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+</body>
+</html>

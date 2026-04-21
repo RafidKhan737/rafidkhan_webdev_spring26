@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Starboy | The Weeknd</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    body.starboy-page {
+  background:
+    radial-gradient(circle at top, rgba(255, 40, 40, 0.06), transparent 22%),
+    radial-gradient(circle at bottom right, rgba(40, 110, 255, 0.08), transparent 28%),
+    linear-gradient(rgba(4, 4, 8, 0.40), rgba(0, 0, 0, 0.62)),
+    url("../images/backgrounds/starboy-bg.jpeg") center/cover no-repeat;
+  color: white;
+  overflow-x: hidden;
+  background-attachment: fixed;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+    .album-page {
+      min-height: 100vh;
+      padding: 2rem 2rem 4rem;
+      position: relative;
+    }
+
+    .album-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .album-topbar a,
+    .bottom-nav a {
+      text-decoration: none;
+      color: white;
+      padding: 0.88rem 1.2rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: 0.3s ease;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.28);
+    }
+
+    .album-topbar a:hover,
+    .bottom-nav a:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.22);
+      box-shadow:
+        0 0 18px rgba(255, 40, 40, 0.10),
+        0 0 28px rgba(40, 110, 255, 0.10);
+    }
+
+    .album-shell {
+      width: min(1320px, 96%);
+      margin: 0 auto;
+    }
+
+    .album-hero {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 1.5rem;
+      align-items: end;
+      margin-bottom: 1.75rem;
+    }
+
+    .hero-copy {
+      padding: 0.5rem 0;
+    }
+
+    .album-kicker {
+      text-transform: uppercase;
+      letter-spacing: 5px;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.56);
+      margin-bottom: 0.85rem;
+    }
+
+    .hero-copy h1 {
+      font-size: clamp(3.1rem, 7vw, 6.3rem);
+      line-height: 0.95;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-shadow:
+        0 0 16px rgba(255, 40, 40, 0.10),
+        0 0 22px rgba(40, 110, 255, 0.08);
+    }
+
+    .album-subtitle {
+      max-width: 700px;
+      color: rgba(235,240,255,0.82);
+      line-height: 1.85;
+      font-size: 1.02rem;
+    }
+
+    .hero-stat-panel {
+      padding: 1.3rem 1.35rem;
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background:
+        linear-gradient(135deg, rgba(255,40,40,0.08), rgba(40,110,255,0.06)),
+        rgba(255,255,255,0.03);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.32);
+    }
+
+    .hero-stat-panel h2 {
+      font-size: 1rem;
+      margin-bottom: 0.7rem;
+      letter-spacing: 0.4px;
+    }
+
+    .hero-stat-panel p {
+      color: rgba(230,235,250,0.78);
+      line-height: 1.75;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+
+    .mood-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+    }
+
+    .mood-tag {
+      padding: 0.58rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.84rem;
+      color: rgba(245,248,255,0.92);
+      transition: 0.3s ease;
+    }
+
+    .mood-tag:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.18);
+      box-shadow:
+        0 0 14px rgba(255, 40, 40, 0.08),
+        0 0 18px rgba(40, 110, 255, 0.08);
+    }
+
+    .visual-stage {
+      position: relative;
+      height: 500px;
+      border-radius: 28px;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(255,40,40,0.08), rgba(40,110,255,0.08)),
+        rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.09);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      box-shadow:
+        0 24px 60px rgba(0,0,0,0.34),
+        0 0 24px rgba(255, 40, 40, 0.06),
+        0 0 24px rgba(40, 110, 255, 0.06);
+      margin-bottom: 1.6rem;
+    }
+
+    #starboyCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .stage-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,0.02), rgba(0,0,0,0.12)),
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,0.02) 0px,
+          rgba(255,255,255,0.02) 1px,
+          transparent 1px,
+          transparent 7px
+        );
+      pointer-events: none;
+      mix-blend-mode: screen;
+      z-index: 2;
+    }
+
+    .stage-quote-wrap {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .stage-quote {
+      max-width: 760px;
+      text-align: center;
+      font-size: clamp(1.05rem, 2vw, 1.75rem);
+      line-height: 1.5;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: rgba(255,255,255,0.72);
+      padding: 1rem 1.35rem;
+      border-radius: 18px;
+      background: rgba(0,0,0,0.24);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      text-shadow:
+        -2px 0 rgba(255, 50, 50, 0.18),
+        2px 0 rgba(60, 130, 255, 0.18),
+        0 0 10px rgba(255,255,255,0.06);
+    }
+
+    .stage-caption {
+      position: absolute;
+      left: 1.2rem;
+      bottom: 1rem;
+      color: rgba(235,240,255,0.78);
+      font-size: 0.92rem;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .glass-panel {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 24px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.32);
+    }
+
+    .left-stack {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .themes-panel,
+    .tracks-panel,
+    .transformation-panel {
+      padding: 1.5rem;
+    }
+
+    .themes-panel h2,
+    .tracks-panel h2,
+    .transformation-panel h2 {
+      font-size: 1.14rem;
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.3px;
+    }
+
+    .themes-panel p,
+    .tracks-panel p,
+    .transformation-panel p {
+      color: rgba(235,240,255,0.78);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+
+    .theme-stack {
+      display: grid;
+      gap: 0.85rem;
+      margin-top: 0.75rem;
+    }
+
+    .theme-card {
+      padding: 1rem;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: 0.3s ease;
+    }
+
+    .theme-card:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.12);
+      box-shadow:
+        0 0 18px rgba(255, 40, 40, 0.05),
+        0 0 18px rgba(40, 110, 255, 0.05);
+    }
+
+    .theme-card strong {
+      display: block;
+      margin-bottom: 0.35rem;
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.96);
+    }
+
+    .theme-card span {
+      color: rgba(230,235,250,0.74);
+      line-height: 1.65;
+      font-size: 0.92rem;
+    }
+
+    .transform-line {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 0.75rem;
+      align-items: center;
+      margin-top: 1rem;
+      color: rgba(240,245,255,0.9);
+      font-size: 0.95rem;
+    }
+
+    .transform-line span {
+      padding: 0.8rem 0.9rem;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.035);
+      border: 1px solid rgba(255,255,255,0.06);
+      text-align: center;
+    }
+
+    .transform-arrow {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.72);
+    }
+
+    .track-list {
+      display: grid;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .track {
+      display: grid;
+      grid-template-columns: 38px 1fr 170px auto;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.92rem 1rem;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .track::before,
+    .track::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .track::before {
+      background: linear-gradient(90deg, transparent, rgba(255, 50, 50, 0.08), transparent);
+      transform: translateX(-10px);
+    }
+
+    .track::after {
+      background: linear-gradient(90deg, transparent, rgba(60, 130, 255, 0.08), transparent);
+      transform: translateX(10px);
+    }
+
+    .track:hover {
+      transform: translateX(6px) scale(1.01);
+      background: rgba(255,255,255,0.065);
+      border-color: rgba(255,255,255,0.13);
+      box-shadow:
+        -6px 0 18px rgba(255, 40, 40, 0.05),
+        6px 0 18px rgba(40, 110, 255, 0.05);
+    }
+
+    .track:hover::before,
+    .track:hover::after {
+      opacity: 1;
+    }
+
+    .track-number {
+      color: rgba(255,255,255,0.48);
+      font-size: 0.9rem;
+    }
+
+    .track-title {
+      color: rgba(248,248,248,0.96);
+      font-size: 0.97rem;
+    }
+
+    .track-plays {
+      color: rgba(220,225,245,0.58);
+      font-size: 0.88rem;
+      text-align: right;
+    }
+
+    .track-time {
+      color: rgba(255,255,255,0.48);
+      font-size: 0.88rem;
+      text-align: right;
+    }
+
+    .bottom-nav {
+      display: flex;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 1100px) {
+      .album-hero,
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .visual-stage {
+        height: 420px;
+      }
+
+      .track {
+        grid-template-columns: 38px 1fr auto;
+      }
+
+      .track-plays {
+        display: none;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .album-page {
+        padding: 1.2rem 1rem 2.5rem;
+      }
+
+      .album-topbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .hero-copy h1 {
+        font-size: 2.8rem;
+      }
+
+      .visual-stage {
+        height: 320px;
+      }
+
+      .stage-quote {
+        font-size: 0.95rem;
+        padding: 0.85rem 1rem;
+      }
+
+      .transform-line {
+        grid-template-columns: 1fr;
+      }
+
+      .track {
+        grid-template-columns: 30px 1fr;
+      }
+
+      .track-time {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body class="starboy-page">
+  <main class="album-page">
+    <div class="album-topbar">
+      <a href="beauty-behind-the-madness.html">← Go back to Beauty Behind the Madness</a>
+      <a href="my-dear-melancholy.html">Enter My Dear Melancholy →</a>
+    </div>
+
+    <div class="album-shell">
+      <section class="album-hero">
+        <div class="hero-copy">
+          <p class="album-kicker">Album Experience</p>
+          <h1>Starboy</h1>
+          <p class="album-subtitle">
+            Starboy feels like a full transformation — destroying the old self and stepping into a colder,
+            sharper, more powerful identity built on control, image, and detachment.
+          </p>
+        </div>
+
+        <aside class="hero-stat-panel">
+          <h2>The Core Feeling</h2>
+          <p>
+            Reinvention. Fame without apology. Emotional numbness wearing luxury like armor.
+            This is not a breakdown — it is a rebrand of the chaos into power.
+          </p>
+
+          <div class="mood-tags">
+            <div class="mood-tag">Reinvention</div>
+            <div class="mood-tag">Control</div>
+            <div class="mood-tag">Luxury</div>
+            <div class="mood-tag">Detachment</div>
+            <div class="mood-tag">Cold confidence</div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="visual-stage">
+        <canvas id="starboyCanvas"></canvas>
+        <div class="stage-overlay"></div>
+
+        <div class="stage-quote-wrap">
+          <div class="stage-quote">a new identity built from destroying the old one</div>
+        </div>
+
+        <div class="stage-caption">
+          Glitch bars and electric pulses cut across the screen like a controlled digital takeover.
+        </div>
+      </section>
+
+      <section class="content-grid">
+        <div class="left-stack">
+          <div class="transformation-panel glass-panel">
+            <h2>Transformation</h2>
+            <p>
+              Unlike the earlier eras, this one does not drift or collapse. It upgrades. The sound is cleaner,
+              sleeker, and more synthetic — like luxury and darkness fused into a persona.
+            </p>
+
+            <div class="transform-line">
+              <span>Old self</span>
+              <div class="transform-arrow">→</div>
+              <span>Starboy</span>
+            </div>
+          </div>
+
+          <div class="themes-panel glass-panel">
+            <h2>Sound & Themes</h2>
+            <p>
+              Starboy mixes futuristic pop, heavy synths, and sharp production into something stylish and almost
+              emotionless on the surface. It feels expensive, controlled, and dangerous.
+            </p>
+
+            <div class="theme-stack">
+              <div class="theme-card">
+                <strong>Fame as identity</strong>
+                <span>Success is no longer a burden to hide — it becomes part of the image itself.</span>
+              </div>
+
+              <div class="theme-card">
+                <strong>Luxury and numbness</strong>
+                <span>The more polished the world becomes, the less human the emotions feel underneath it.</span>
+              </div>
+
+              <div class="theme-card">
+                <strong>Power through detachment</strong>
+                <span>This era survives by feeling less, showing less, and owning the coldness.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tracks-panel glass-panel">
+          <h2>Track Atmosphere</h2>
+          <p>
+            These tracks feel like sharp scenes inside a futuristic power fantasy — glossy, aggressive,
+            synthetic, and stylish enough to hide the emptiness underneath.
+          </p>
+
+          <div class="track-list">
+            <div class="track"><span class="track-number">1</span><span class="track-title">Starboy</span><span class="track-plays">4,486,945,879</span><span class="track-time">3:50</span></div>
+            <div class="track"><span class="track-number">2</span><span class="track-title">Party Monster</span><span class="track-plays">1,028,473,431</span><span class="track-time">4:09</span></div>
+            <div class="track"><span class="track-number">3</span><span class="track-title">False Alarm</span><span class="track-plays">347,581,561</span><span class="track-time">3:40</span></div>
+            <div class="track"><span class="track-number">4</span><span class="track-title">Reminder</span><span class="track-plays">1,427,003,553</span><span class="track-time">3:38</span></div>
+            <div class="track"><span class="track-number">5</span><span class="track-title">Rockin’</span><span class="track-plays">287,017,511</span><span class="track-time">3:52</span></div>
+            <div class="track"><span class="track-number">6</span><span class="track-title">Secrets</span><span class="track-plays">411,628,597</span><span class="track-time">4:25</span></div>
+            <div class="track"><span class="track-number">7</span><span class="track-title">True Colors</span><span class="track-plays">333,757,084</span><span class="track-time">3:26</span></div>
+            <div class="track"><span class="track-number">8</span><span class="track-title">Stargirl Interlude</span><span class="track-plays">1,542,693,875</span><span class="track-time">1:51</span></div>
+            <div class="track"><span class="track-number">9</span><span class="track-title">Sidewalks</span><span class="track-plays">477,399,120</span><span class="track-time">3:51</span></div>
+            <div class="track"><span class="track-number">10</span><span class="track-title">Six Feet Under</span><span class="track-plays">344,195,670</span><span class="track-time">3:57</span></div>
+            <div class="track"><span class="track-number">11</span><span class="track-title">Love To Lay</span><span class="track-plays">179,250,514</span><span class="track-time">3:43</span></div>
+            <div class="track"><span class="track-number">12</span><span class="track-title">A Lonely Night</span><span class="track-plays">298,631,541</span><span class="track-time">3:40</span></div>
+            <div class="track"><span class="track-number">13</span><span class="track-title">Attention</span><span class="track-plays">211,330,081</span><span class="track-time">3:17</span></div>
+            <div class="track"><span class="track-number">14</span><span class="track-title">Ordinary Life</span><span class="track-plays">256,918,100</span><span class="track-time">3:41</span></div>
+            <div class="track"><span class="track-number">15</span><span class="track-title">Nothing Without You</span><span class="track-plays">216,981,468</span><span class="track-time">3:18</span></div>
+            <div class="track"><span class="track-number">16</span><span class="track-title">All I Know</span><span class="track-plays">192,682,178</span><span class="track-time">5:21</span></div>
+            <div class="track"><span class="track-number">17</span><span class="track-title">Die For You</span><span class="track-plays">3,231,367,801</span><span class="track-time">4:20</span></div>
+            <div class="track"><span class="track-number">18</span><span class="track-title">I Feel It Coming</span><span class="track-plays">2,192,332,084</span><span class="track-time">4:29</span></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="bottom-nav">
+        <a href="my-dear-melancholy.html">Continue into My Dear Melancholy →</a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const canvas = document.getElementById("starboyCanvas");
+    const ctx = canvas.getContext("2d");
+
+    let glitchBars = [];
+    let flickers = [];
+    let mouseX = 0;
+    let mouseY = 0;
+    let hoverBurst = 0;
+    let scanShift = 0;
+
+    function resizeCanvas() {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+      createBars();
+    }
+
+    function createBars() {
+      glitchBars = [];
+      const total = 42;
+
+      for (let i = 0; i < total; i++) {
+        glitchBars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          w: 40 + Math.random() * 220,
+          h: 5 + Math.random() * 22,
+          alpha: 0.08 + Math.random() * 0.18,
+          speed: 0.15 + Math.random() * 0.55,
+          color: Math.random() > 0.5 ? "red" : "blue"
+        });
+      }
+    }
+
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    canvas.addEventListener("mousemove", (e) => {
+      const rect = canvas.getBoundingClientRect();
+      mouseX = e.clientX - rect.left;
+      mouseY = e.clientY - rect.top;
+      hoverBurst = 1;
+
+      for (let i = 0; i < 4; i++) {
+        flickers.push({
+          x: mouseX + (Math.random() - 0.5) * 30,
+          y: mouseY + (Math.random() - 0.5) * 30,
+          w: 30 + Math.random() * 90,
+          h: 4 + Math.random() * 14,
+          alpha: 0.25 + Math.random() * 0.25,
+          color: Math.random() > 0.5 ? "red" : "blue"
+        });
+      }
+    });
+
+    canvas.addEventListener("mouseleave", () => {
+      mouseX = canvas.width / 2;
+      mouseY = canvas.height / 2;
+    });
+
+    function drawBackgroundPulse() {
+      const gradient = ctx.createRadialGradient(
+        canvas.width * 0.5,
+        canvas.height * 0.45,
+        40,
+        canvas.width * 0.5,
+        canvas.height * 0.45,
+        canvas.height * 0.75
+      );
+
+      gradient.addColorStop(0, "rgba(255,255,255,0.02)");
+      gradient.addColorStop(0.4, "rgba(255,40,40,0.03)");
+      gradient.addColorStop(0.75, "rgba(40,110,255,0.03)");
+      gradient.addColorStop(1, "rgba(0,0,0,0)");
+
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function drawGrid() {
+      ctx.lineWidth = 1;
+
+      for (let x = 0; x < canvas.width; x += 44) {
+        ctx.strokeStyle = "rgba(255,255,255,0.03)";
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+      }
+
+      for (let y = 0; y < canvas.height; y += 44) {
+        ctx.strokeStyle = "rgba(255,255,255,0.025)";
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvas.width, y);
+        ctx.stroke();
+      }
+    }
+
+    function drawScanLines() {
+      for (let y = 0; y < canvas.height; y += 8) {
+        ctx.fillStyle = "rgba(255,255,255,0.018)";
+        ctx.fillRect(0, y + (scanShift % 8), canvas.width, 1);
+      }
+    }
+
+    function drawBars() {
+      glitchBars.forEach((bar, index) => {
+        const pullX = (mouseX - (bar.x + bar.w / 2)) * 0.00018;
+        bar.y += bar.speed;
+        bar.x += pullX * 16;
+
+        if (bar.y > canvas.height + 30) {
+          bar.y = -20;
+          bar.x = Math.random() * canvas.width;
+        }
+
+        if (bar.x < -260) bar.x = canvas.width + 60;
+        if (bar.x > canvas.width + 260) bar.x = -60;
+
+        const boost = hoverBurst * 0.10;
+        const alpha = bar.alpha + boost;
+
+        if (bar.color === "red") {
+          ctx.fillStyle = `rgba(255,55,55,${alpha})`;
+          ctx.shadowColor = "rgba(255,55,55,0.35)";
+        } else {
+          ctx.fillStyle = `rgba(70,130,255,${alpha})`;
+          ctx.shadowColor = "rgba(70,130,255,0.35)";
+        }
+
+        ctx.shadowBlur = 14;
+        ctx.fillRect(bar.x, bar.y, bar.w, bar.h);
+
+        if (index % 6 === 0) {
+          ctx.fillStyle = "rgba(255,255,255,0.06)";
+          ctx.fillRect(bar.x + bar.w * 0.2, bar.y, bar.w * 0.22, bar.h);
+        }
+      });
+
+      ctx.shadowBlur = 0;
+    }
+
+    function drawFlickers() {
+      for (let i = flickers.length - 1; i >= 0; i--) {
+        const f = flickers[i];
+
+        if (f.color === "red") {
+          ctx.fillStyle = `rgba(255,55,55,${f.alpha})`;
+          ctx.shadowColor = "rgba(255,55,55,0.45)";
+        } else {
+          ctx.fillStyle = `rgba(70,130,255,${f.alpha})`;
+          ctx.shadowColor = "rgba(70,130,255,0.45)";
+        }
+
+        ctx.shadowBlur = 18;
+        ctx.fillRect(f.x, f.y, f.w, f.h);
+
+        f.alpha *= 0.9;
+        f.w *= 0.98;
+
+        if (f.alpha < 0.03) {
+          flickers.splice(i, 1);
+        }
+      }
+
+      ctx.shadowBlur = 0;
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      drawBackgroundPulse();
+      drawGrid();
+      drawScanLines();
+      drawBars();
+      drawFlickers();
+
+      hoverBurst *= 0.92;
+      scanShift += 0.8;
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+</body>
+</html>

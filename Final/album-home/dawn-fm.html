@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dawn FM | The Weeknd</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body.dawnfm-page {
+      margin: 0;
+      color: white;
+      font-family: Arial, Helvetica, sans-serif;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at top, rgba(120, 150, 255, 0.14), transparent 24%),
+        radial-gradient(circle at bottom right, rgba(255, 170, 80, 0.10), transparent 28%),
+        linear-gradient(rgba(6, 10, 24, 0.68), rgba(3, 5, 14, 0.90)),
+        url("../images/backgrounds/dawn-fm-bg.jpeg") center/cover no-repeat;
+      background-attachment: fixed;
+    }
+
+    .album-page {
+      min-height: 100vh;
+      padding: 2rem 2rem 4rem;
+      position: relative;
+    }
+
+    .album-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .album-topbar a,
+    .bottom-nav a {
+      text-decoration: none;
+      color: white;
+      padding: 0.88rem 1.2rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: 0.3s ease;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.28);
+    }
+
+    .album-topbar a:hover,
+    .bottom-nav a:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.18);
+      box-shadow:
+        0 0 18px rgba(120,150,255,0.12),
+        0 0 18px rgba(255,170,80,0.10);
+    }
+
+    .album-shell {
+      width: min(1380px, 96%);
+      margin: 0 auto;
+    }
+
+    .hero-layout {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 1.5rem;
+      align-items: stretch;
+      margin-bottom: 1.7rem;
+    }
+
+    .visual-stage {
+      position: relative;
+      min-height: 720px;
+      border-radius: 30px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 18%, rgba(255, 200, 120, 0.12), transparent 18%),
+        radial-gradient(circle at 50% 60%, rgba(100, 130, 255, 0.12), transparent 28%),
+        linear-gradient(180deg, rgba(50,70,120,0.14), rgba(10,14,28,0.4)),
+        rgba(16, 20, 34, 0.55);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow:
+        0 26px 65px rgba(0,0,0,0.38),
+        inset 0 0 50px rgba(130,150,255,0.06);
+    }
+
+    #dawnFMCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .stage-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 50% 14%, rgba(255,255,255,0.08), transparent 18%),
+        linear-gradient(to bottom, rgba(255,255,255,0.015), rgba(0,0,0,0.16));
+    }
+
+    .stage-center {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2.2rem;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .album-kicker {
+      text-transform: uppercase;
+      letter-spacing: 5px;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.58);
+      margin-bottom: 1rem;
+    }
+
+    .stage-center h1 {
+      margin: 0 0 1rem;
+      font-size: clamp(3.4rem, 8vw, 6.5rem);
+      line-height: 0.95;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-shadow:
+        0 0 18px rgba(120,150,255,0.10),
+        0 0 26px rgba(255,180,80,0.08);
+    }
+
+    .album-subtitle {
+      max-width: 700px;
+      color: rgba(240,236,255,0.82);
+      line-height: 1.9;
+      font-size: 1.02rem;
+      margin-bottom: 1.3rem;
+    }
+
+    .stage-quote {
+      max-width: 620px;
+      font-size: clamp(1rem, 2vw, 1.55rem);
+      line-height: 1.7;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255,244,230,0.82);
+      background: rgba(10,14,28,0.24);
+      padding: 1rem 1.3rem;
+      border-radius: 18px;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      text-shadow:
+        0 0 12px rgba(255,180,80,0.10),
+        0 0 12px rgba(120,150,255,0.10);
+    }
+
+    .stage-caption {
+      position: absolute;
+      left: 1.3rem;
+      bottom: 1rem;
+      z-index: 3;
+      color: rgba(230,230,245,0.76);
+      font-size: 0.92rem;
+      pointer-events: none;
+    }
+
+    .right-stack {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .glass-panel {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 24px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.32);
+    }
+
+    .panel {
+      padding: 1.45rem;
+    }
+
+    .panel h2 {
+      margin: 0 0 0.75rem;
+      font-size: 1.1rem;
+      letter-spacing: 0.3px;
+    }
+
+    .panel p {
+      color: rgba(236,232,245,0.78);
+      line-height: 1.85;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+
+    .mood-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin-top: 0.5rem;
+    }
+
+    .mood-tag {
+      padding: 0.58rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(120,150,255,0.10);
+      border: 1px solid rgba(255,255,255,0.08);
+      font-size: 0.84rem;
+      color: rgba(245,245,255,0.92);
+      transition: 0.3s ease;
+    }
+
+    .mood-tag:hover {
+      transform: translateY(-2px);
+      background: rgba(255,180,80,0.14);
+      border-color: rgba(255,255,255,0.14);
+      box-shadow:
+        0 0 12px rgba(120,150,255,0.08),
+        0 0 12px rgba(255,180,80,0.06);
+    }
+
+    .broadcast-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+
+    .broadcast-card {
+      padding: 1rem 0.85rem;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      text-align: center;
+      color: rgba(248,244,255,0.9);
+      font-size: 0.92rem;
+    }
+
+    .broadcast-card span {
+      display: block;
+      margin-top: 0.4rem;
+      color: rgba(220,220,235,0.56);
+      font-size: 0.78rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .bottom-layout {
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 1.5rem;
+      margin-bottom: 1.6rem;
+    }
+
+    .left-bottom {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .theme-stack {
+      display: grid;
+      gap: 0.85rem;
+      margin-top: 0.8rem;
+    }
+
+    .theme-card {
+      padding: 1rem;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: 0.3s ease;
+    }
+
+    .theme-card:hover {
+      transform: translateY(-3px);
+      background: rgba(120,150,255,0.06);
+      border-color: rgba(255,255,255,0.12);
+      box-shadow:
+        0 0 16px rgba(120,150,255,0.06),
+        0 0 16px rgba(255,180,80,0.05);
+    }
+
+    .theme-card strong {
+      display: block;
+      margin-bottom: 0.35rem;
+      font-size: 0.95rem;
+      color: rgba(250,246,255,0.96);
+    }
+
+    .theme-card span {
+      color: rgba(230,226,240,0.74);
+      line-height: 1.65;
+      font-size: 0.92rem;
+    }
+
+    .track-list {
+      display: grid;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .track {
+      display: grid;
+      grid-template-columns: 40px 1fr 170px auto;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.95rem 1rem;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .track::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(120,150,255,0.10), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .track:hover {
+      transform: translateX(6px);
+      background: rgba(120,150,255,0.06);
+      border-color: rgba(255,255,255,0.12);
+      box-shadow:
+        0 0 16px rgba(120,150,255,0.06),
+        0 0 16px rgba(255,180,80,0.05);
+    }
+
+    .track:hover::before {
+      opacity: 1;
+    }
+
+    .track-number {
+      color: rgba(255,255,255,0.46);
+      font-size: 0.9rem;
+    }
+
+    .track-title {
+      color: rgba(248,246,255,0.96);
+      font-size: 0.97rem;
+    }
+
+    .track-plays {
+      color: rgba(228,228,240,0.56);
+      font-size: 0.88rem;
+      text-align: right;
+    }
+
+    .track-time {
+      color: rgba(255,255,255,0.46);
+      font-size: 0.88rem;
+      text-align: right;
+    }
+
+    .bottom-nav {
+      display: flex;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 1150px) {
+      .hero-layout,
+      .bottom-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .visual-stage {
+        min-height: 520px;
+      }
+
+      .broadcast-strip {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+
+      .track {
+        grid-template-columns: 40px 1fr auto;
+      }
+
+      .track-plays {
+        display: none;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .album-page {
+        padding: 1.2rem 1rem 2.5rem;
+      }
+
+      .album-topbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .stage-center h1 {
+        font-size: 2.9rem;
+      }
+
+      .visual-stage {
+        min-height: 360px;
+      }
+
+      .stage-quote {
+        font-size: 0.95rem;
+        padding: 0.85rem 1rem;
+      }
+
+      .broadcast-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .track {
+        grid-template-columns: 30px 1fr;
+      }
+
+      .track-time {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body class="dawnfm-page">
+  <main class="album-page">
+    <div class="album-topbar">
+      <a href="after-hours.html">← Go back to After Hours</a>
+      <a href="hurry-up-tomorrow.html">Enter Hurry Up Tomorrow →</a>
+    </div>
+
+    <div class="album-shell">
+      <section class="hero-layout">
+        <section class="visual-stage" id="visualStage">
+          <canvas id="dawnFMCanvas"></canvas>
+          <div class="stage-overlay"></div>
+
+          <div class="stage-center">
+            <p class="album-kicker">Album Experience</p>
+            <h1>Dawn FM</h1>
+            <p class="album-subtitle">
+              Dawn FM feels like a surreal radio transmission through purgatory —
+              soft, reflective, and luminous, guiding lost souls toward whatever comes next.
+            </p>
+            <div class="stage-quote">a radio station guiding lost souls toward the sunrise</div>
+          </div>
+
+          <div class="stage-caption">
+            Floating particles, glowing fog, and radio-wave ripples drift like a signal between worlds.
+          </div>
+        </section>
+
+        <section class="right-stack">
+          <div class="glass-panel panel">
+            <h2>The Core Feeling</h2>
+            <p>
+              Reflection after chaos. Being suspended between who you were and who you could become.
+              Letting go, but not fully ready. Acceptance mixed with fear.
+            </p>
+
+            <div class="mood-tags">
+              <div class="mood-tag">Reflection</div>
+              <div class="mood-tag">Redemption</div>
+              <div class="mood-tag">Transition</div>
+              <div class="mood-tag">Acceptance</div>
+              <div class="mood-tag">Spiritual fear</div>
+            </div>
+
+            <div class="broadcast-strip">
+              <div class="broadcast-card">Chaos<span>behind you</span></div>
+              <div class="broadcast-card">Purgatory<span>right now</span></div>
+              <div class="broadcast-card">Light<span>ahead</span></div>
+            </div>
+          </div>
+
+          <div class="glass-panel panel">
+            <h2>Transmission</h2>
+            <p>
+              This album feels like one continuous broadcast. Smooth transitions, narration, and glowing synths
+              make it feel less like a playlist and more like a guided passage through the dark.
+            </p>
+
+            <div class="theme-stack">
+              <div class="theme-card">
+                <strong>Healing with hesitation</strong>
+                <span>The light is there, but the journey still feels uncertain and emotionally unresolved.</span>
+              </div>
+
+              <div class="theme-card">
+                <strong>Radio as guide</strong>
+                <span>Jim Carrey’s narration turns the album into a spiritual station between endings and rebirth.</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section class="bottom-layout">
+        <section class="left-bottom">
+          <div class="glass-panel panel">
+            <h2>Sound & Aesthetic</h2>
+            <p>
+              Dawn FM is brighter than After Hours, but the emotion still lingers underneath.
+              The synth-pop feels warm, nostalgic, and polished, while the subject matter stays vulnerable and reflective.
+            </p>
+
+            <div class="theme-stack">
+              <div class="theme-card">
+                <strong>Warm but haunted</strong>
+                <span>The sound glows softly, but there is still sadness and spiritual tension underneath it.</span>
+              </div>
+
+              <div class="theme-card">
+                <strong>One long transition</strong>
+                <span>The sequencing feels seamless, like driving through darkness while slowly seeing the horizon appear.</span>
+              </div>
+
+              <div class="theme-card">
+                <strong>Consequence after chaos</strong>
+                <span>Unlike After Hours, this is not the collapse itself — it is the aftermath, reflection, and path forward.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-panel panel">
+            <h2>Themes</h2>
+            <p>
+              This era is about facing yourself honestly, letting go of what you were, and wondering whether you are truly ready to change.
+            </p>
+
+            <div class="theme-stack">
+              <div class="theme-card">
+                <strong>Redemption and self-reflection</strong>
+                <span>The album keeps asking whether healing is possible after everything that came before.</span>
+              </div>
+
+              <div class="theme-card">
+                <strong>Afterlife imagery</strong>
+                <span>The radio-station concept makes the whole journey feel spiritual, dreamlike, and suspended beyond ordinary time.</span>
+              </div>
+
+              <div class="theme-card">
+                <strong>Letting go slowly</strong>
+                <span>This is not sudden freedom — it is the slow emotional process of releasing guilt, attachment, and fear.</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="glass-panel panel">
+          <h2>Track Atmosphere</h2>
+          <p>
+            These tracks feel like chapters in a surreal overnight broadcast — smooth, glowing, reflective,
+            and gently guiding the listener through fear, memory, and release.
+          </p>
+
+          <div class="track-list">
+            <div class="track"><span class="track-number">1</span><span class="track-title">Dawn FM</span><span class="track-plays">72,464,415</span><span class="track-time">1:36</span></div>
+            <div class="track"><span class="track-number">2</span><span class="track-title">Gasoline</span><span class="track-plays">193,354,275</span><span class="track-time">3:32</span></div>
+            <div class="track"><span class="track-number">3</span><span class="track-title">How Do I Make You Love Me?</span><span class="track-plays">192,279,823</span><span class="track-time">3:34</span></div>
+            <div class="track"><span class="track-number">4</span><span class="track-title">Take My Breath</span><span class="track-plays">264,502,847</span><span class="track-time">5:39</span></div>
+            <div class="track"><span class="track-number">5</span><span class="track-title">Sacrifice</span><span class="track-plays">470,986,251</span><span class="track-time">3:08</span></div>
+            <div class="track"><span class="track-number">6</span><span class="track-title">A Tale By Quincy</span><span class="track-plays">55,576,198</span><span class="track-time">1:36</span></div>
+            <div class="track"><span class="track-number">7</span><span class="track-title">Out of Time</span><span class="track-plays">632,508,465</span><span class="track-time">3:34</span></div>
+            <div class="track"><span class="track-number">8</span><span class="track-title">Here We Go... Again (feat. Tyler, the Creator)</span><span class="track-plays">124,928,075</span><span class="track-time">3:29</span></div>
+            <div class="track"><span class="track-number">9</span><span class="track-title">Best Friends</span><span class="track-plays">151,614,458</span><span class="track-time">2:43</span></div>
+            <div class="track"><span class="track-number">10</span><span class="track-title">Is There Someone Else?</span><span class="track-plays">1,050,707,255</span><span class="track-time">3:19</span></div>
+            <div class="track"><span class="track-number">11</span><span class="track-title">Starry Eyes</span><span class="track-plays">122,830,284</span><span class="track-time">2:28</span></div>
+            <div class="track"><span class="track-number">12</span><span class="track-title">Every Angel is Terrifying</span><span class="track-plays">49,736,525</span><span class="track-time">2:47</span></div>
+            <div class="track"><span class="track-number">13</span><span class="track-title">Don’t Break My Heart</span><span class="track-plays">96,709,176</span><span class="track-time">3:25</span></div>
+            <div class="track"><span class="track-number">14</span><span class="track-title">I Heard You’re Married (feat. Lil Wayne)</span><span class="track-plays">122,381,094</span><span class="track-time">4:23</span></div>
+            <div class="track"><span class="track-number">15</span><span class="track-title">Less Than Zero</span><span class="track-plays">410,461,154</span><span class="track-time">3:31</span></div>
+            <div class="track"><span class="track-number">16</span><span class="track-title">Phantom Regret by Jim</span><span class="track-plays">43,584,102</span><span class="track-time">2:59</span></div>
+          </div>
+        </section>
+      </section>
+
+      <div class="bottom-nav">
+        <a href="../index.html">Return to The Weeknd Experience →</a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const canvas = document.getElementById("dawnFMCanvas");
+    const ctx = canvas.getContext("2d");
+    const visualStage = document.getElementById("visualStage");
+
+    let particles = [];
+    let waves = [];
+    let ripples = [];
+    let tick = 0;
+
+    function resizeCanvas() {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+      createScene();
+    }
+
+    function createScene() {
+      particles = [];
+      waves = [];
+      ripples = [];
+
+      for (let i = 0; i < 55; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: 1 + Math.random() * 3.5,
+          speedY: 0.12 + Math.random() * 0.45,
+          driftX: (Math.random() - 0.5) * 0.25,
+          alpha: 0.15 + Math.random() * 0.35
+        });
+      }
+
+      for (let i = 0; i < 5; i++) {
+        waves.push({
+          y: canvas.height * (0.25 + i * 0.14),
+          amp: 12 + Math.random() * 18,
+          len: 0.008 + Math.random() * 0.01,
+          speed: 0.02 + Math.random() * 0.02,
+          alpha: 0.08 + Math.random() * 0.07
+        });
+      }
+    }
+
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    visualStage.addEventListener("mousemove", (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      ripples.push({
+        x,
+        y,
+        r: 8,
+        alpha: 0.18
+      });
+
+      if (ripples.length > 18) {
+        ripples.shift();
+      }
+    });
+
+    function drawGlow() {
+      const gradient = ctx.createRadialGradient(
+        canvas.width * 0.5,
+        canvas.height * 0.22,
+        20,
+        canvas.width * 0.5,
+        canvas.height * 0.22,
+        canvas.width * 0.7
+      );
+
+      gradient.addColorStop(0, "rgba(255,190,120,0.12)");
+      gradient.addColorStop(0.35, "rgba(120,140,255,0.08)");
+      gradient.addColorStop(1, "rgba(0,0,0,0)");
+
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function drawFog() {
+      const grad = ctx.createRadialGradient(
+        canvas.width * 0.5,
+        canvas.height * 0.65,
+        30,
+        canvas.width * 0.5,
+        canvas.height * 0.65,
+        canvas.width * 0.65
+      );
+      grad.addColorStop(0, "rgba(90,120,255,0.05)");
+      grad.addColorStop(0.5, "rgba(255,180,90,0.04)");
+      grad.addColorStop(1, "rgba(0,0,0,0)");
+
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function drawParticles() {
+      particles.forEach((p) => {
+        p.y -= p.speedY;
+        p.x += p.driftX;
+
+        if (p.y < -10) {
+          p.y = canvas.height + 10;
+          p.x = Math.random() * canvas.width;
+        }
+
+        if (p.x < -10) p.x = canvas.width + 10;
+        if (p.x > canvas.width + 10) p.x = -10;
+
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(220,230,255,${p.alpha})`;
+        ctx.shadowBlur = 12;
+        ctx.shadowColor = "rgba(130,160,255,0.35)";
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      ctx.shadowBlur = 0;
+    }
+
+    function drawWaves() {
+      waves.forEach((wave, index) => {
+        ctx.beginPath();
+
+        for (let x = 0; x <= canvas.width; x += 8) {
+          const y =
+            wave.y +
+            Math.sin(x * wave.len + tick * wave.speed * 40 + index) * wave.amp;
+
+          if (x === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+
+        ctx.strokeStyle = `rgba(140,170,255,${wave.alpha})`;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      });
+    }
+
+    function drawRipples() {
+      for (let i = ripples.length - 1; i >= 0; i--) {
+        const ripple = ripples[i];
+
+        ctx.beginPath();
+        ctx.arc(ripple.x, ripple.y, ripple.r, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(255,210,140,${ripple.alpha})`;
+        ctx.lineWidth = 1.8;
+        ctx.stroke();
+
+        ripple.r += 2.2;
+        ripple.alpha *= 0.94;
+
+        if (ripple.alpha < 0.02) {
+          ripples.splice(i, 1);
+        }
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      drawGlow();
+      drawFog();
+      drawWaves();
+      drawParticles();
+      drawRipples();
+
+      tick++;
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+</body>
+</html>

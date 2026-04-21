@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>After Hours | The Weeknd</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body.after-hours-page {
+      margin: 0;
+      color: white;
+      font-family: Arial, Helvetica, sans-serif;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at top, rgba(170, 0, 0, 0.14), transparent 24%),
+        radial-gradient(circle at bottom right, rgba(255, 40, 40, 0.08), transparent 30%),
+        linear-gradient(rgba(10, 0, 0, 0.62), rgba(0, 0, 0, 0.88)),
+        url("../images/backgrounds/after-hours-bg.jpeg") center/cover no-repeat;
+      background-attachment: fixed;
+    }
+
+    .album-page {
+      min-height: 100vh;
+      padding: 2rem 2rem 4rem;
+      position: relative;
+    }
+
+    .album-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .album-topbar a,
+    .bottom-nav a {
+      text-decoration: none;
+      color: white;
+      padding: 0.88rem 1.2rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: 0.3s ease;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.28);
+    }
+
+    .album-topbar a:hover,
+    .bottom-nav a:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.18);
+      box-shadow: 0 0 18px rgba(220, 20, 20, 0.14);
+    }
+
+    .album-shell {
+      width: min(1320px, 96%);
+      margin: 0 auto;
+    }
+
+    .poster-hero {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .album-kicker {
+      text-transform: uppercase;
+      letter-spacing: 5px;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.56);
+      margin-bottom: 0.9rem;
+    }
+
+    .poster-hero h1 {
+      margin: 0 0 1rem;
+      font-size: clamp(3.2rem, 8vw, 6.5rem);
+      line-height: 0.95;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-shadow:
+        0 0 20px rgba(255, 30, 30, 0.16),
+        0 0 32px rgba(170, 0, 0, 0.12);
+    }
+
+    .album-subtitle {
+      max-width: 760px;
+      margin: 0 auto;
+      color: rgba(245,225,225,0.8);
+      line-height: 1.9;
+      font-size: 1.03rem;
+    }
+
+    .main-layout {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 1.5rem;
+      align-items: start;
+      margin-bottom: 1.75rem;
+    }
+
+    .visual-stage {
+      position: sticky;
+      top: 1.5rem;
+      height: 760px;
+      border-radius: 30px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at center, rgba(220, 35, 35, 0.18), transparent 24%),
+        radial-gradient(circle at 50% 35%, rgba(255, 70, 70, 0.10), transparent 34%),
+        linear-gradient(to bottom, rgba(255,255,255,0.02), rgba(0,0,0,0.14)),
+        rgba(28, 6, 6, 0.46);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(7px);
+      -webkit-backdrop-filter: blur(7px);
+      box-shadow:
+        0 24px 60px rgba(0,0,0,0.38),
+        inset 0 0 60px rgba(255, 40, 40, 0.08);
+    }
+
+    #afterHoursCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .stage-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% 20%, rgba(255,255,255,0.07), transparent 22%),
+        linear-gradient(to bottom, rgba(255,255,255,0.015), rgba(0,0,0,0.18));
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .stage-quote-wrap {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      pointer-events: none;
+    }
+
+    .stage-quote {
+      max-width: 560px;
+      text-align: center;
+      font-size: clamp(1.05rem, 2vw, 1.7rem);
+      line-height: 1.7;
+      letter-spacing: 1.7px;
+      text-transform: uppercase;
+      color: rgba(255,238,238,0.88);
+      padding: 1rem 1.3rem;
+      border-radius: 20px;
+      background: rgba(0,0,0,0.20);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      text-shadow: 0 0 16px rgba(255, 30, 30, 0.16);
+    }
+
+    .stage-caption {
+      position: absolute;
+      left: 1.2rem;
+      bottom: 1rem;
+      z-index: 3;
+      color: rgba(255,220,220,0.8);
+      font-size: 0.92rem;
+      pointer-events: none;
+    }
+
+    .info-stack {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .glass-panel {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 24px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.34);
+    }
+
+    .panel {
+      padding: 1.5rem;
+    }
+
+    .panel h2 {
+      margin: 0 0 0.7rem;
+      font-size: 1.12rem;
+      letter-spacing: 0.3px;
+    }
+
+    .panel p {
+      color: rgba(245,228,228,0.78);
+      line-height: 1.85;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+
+    .mood-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin-top: 0.55rem;
+    }
+
+    .mood-tag {
+      padding: 0.58rem 0.92rem;
+      border-radius: 999px;
+      background: rgba(180, 20, 20, 0.10);
+      border: 1px solid rgba(255,255,255,0.08);
+      font-size: 0.84rem;
+      color: rgba(255,240,240,0.92);
+      transition: 0.3s ease;
+    }
+
+    .mood-tag:hover {
+      transform: translateY(-2px);
+      background: rgba(180, 20, 20, 0.18);
+      border-color: rgba(255,255,255,0.14);
+      box-shadow: 0 0 14px rgba(180, 20, 20, 0.08);
+    }
+
+    .theme-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.9rem;
+      margin-top: 0.9rem;
+    }
+
+    .theme-card {
+      padding: 1rem;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: 0.3s ease;
+    }
+
+    .theme-card:hover {
+      transform: translateY(-3px);
+      background: rgba(180, 20, 20, 0.06);
+      border-color: rgba(255,255,255,0.12);
+      box-shadow: 0 0 16px rgba(180, 20, 20, 0.06);
+    }
+
+    .theme-card strong {
+      display: block;
+      margin-bottom: 0.35rem;
+      font-size: 0.95rem;
+      color: rgba(255,245,245,0.96);
+    }
+
+    .theme-card span {
+      color: rgba(238,220,220,0.74);
+      line-height: 1.65;
+      font-size: 0.92rem;
+    }
+
+    .descent-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+
+    .descent-step {
+      padding: 0.95rem 0.8rem;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      text-align: center;
+      color: rgba(255,235,235,0.88);
+      font-size: 0.9rem;
+    }
+
+    .descent-step span {
+      display: block;
+      margin-top: 0.4rem;
+      color: rgba(255,210,210,0.56);
+      font-size: 0.8rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .tracks-panel .panel-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: end;
+      margin-bottom: 0.5rem;
+    }
+
+    .track-list {
+      display: grid;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .track {
+      display: grid;
+      grid-template-columns: 38px 1fr 160px auto;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.95rem 1rem;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .track::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(180,20,20,0.10), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .track:hover {
+      transform: translateX(6px);
+      background: rgba(180, 20, 20, 0.06);
+      border-color: rgba(255,255,255,0.12);
+      box-shadow: 0 0 16px rgba(180, 20, 20, 0.06);
+    }
+
+    .track:hover::before {
+      opacity: 1;
+    }
+
+    .track-number {
+      color: rgba(255,255,255,0.46);
+      font-size: 0.9rem;
+    }
+
+    .track-title {
+      color: rgba(250,242,242,0.96);
+      font-size: 0.97rem;
+    }
+
+    .track-plays {
+      color: rgba(235,215,215,0.56);
+      font-size: 0.88rem;
+      text-align: right;
+    }
+
+    .track-time {
+      color: rgba(255,255,255,0.46);
+      font-size: 0.88rem;
+      text-align: right;
+    }
+
+    .bottom-nav {
+      display: flex;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 1150px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .visual-stage {
+        position: relative;
+        top: 0;
+        height: 460px;
+      }
+
+      .theme-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .descent-strip {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .track {
+        grid-template-columns: 38px 1fr auto;
+      }
+
+      .track-plays {
+        display: none;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .album-page {
+        padding: 1.2rem 1rem 2.5rem;
+      }
+
+      .album-topbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .poster-hero h1 {
+        font-size: 2.8rem;
+      }
+
+      .visual-stage {
+        height: 320px;
+      }
+
+      .stage-quote {
+        font-size: 0.95rem;
+        padding: 0.85rem 1rem;
+      }
+
+      .descent-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .track {
+        grid-template-columns: 30px 1fr;
+      }
+
+      .track-time {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body class="after-hours-page">
+  <main class="album-page">
+    <div class="album-topbar">
+      <a href="my-dear-melancholy.html">← Go back to My Dear Melancholy</a>
+      <a href="dawn-fm.html">Enter Dawn FM →</a>
+    </div>
+
+    <div class="album-shell">
+      <header class="poster-hero">
+        <p class="album-kicker">Album Experience</p>
+        <h1>After Hours</h1>
+        <p class="album-subtitle">
+          After Hours feels like a cinematic spiral through fame, regret, and self-destruction —
+          a never-ending night where every choice leads deeper into the red.
+        </p>
+      </header>
+
+      <section class="main-layout">
+        <section class="visual-stage" id="visualStage">
+          <canvas id="afterHoursCanvas"></canvas>
+          <div class="stage-overlay"></div>
+
+          <div class="stage-quote-wrap">
+            <div class="stage-quote">losing yourself in the night and realizing there is no way back</div>
+          </div>
+
+          <div class="stage-caption">
+            Red haze, blurred lights, and passing shadows drift like a city collapsing in slow motion.
+          </div>
+        </section>
+
+        <section class="info-stack">
+          <div class="glass-panel panel">
+            <h2>The Core Feeling</h2>
+            <p>
+              A chaotic descent after success. Regret hitting all at once. Loneliness inside a loud neon world.
+              Trying to fix things, but only making them worse.
+            </p>
+
+            <div class="mood-tags">
+              <div class="mood-tag">Madness</div>
+              <div class="mood-tag">Regret</div>
+              <div class="mood-tag">Isolation</div>
+              <div class="mood-tag">Neon chaos</div>
+              <div class="mood-tag">Self-destruction</div>
+            </div>
+
+            <div class="descent-strip">
+              <div class="descent-step">Alone<span>start</span></div>
+              <div class="descent-step">Heartless<span>mask</span></div>
+              <div class="descent-step">Faith<span>collapse</span></div>
+              <div class="descent-step">After Hours<span>reckoning</span></div>
+            </div>
+          </div>
+
+          <div class="glass-panel panel">
+            <h2>Sound & Themes</h2>
+            <p>
+              Dark synth-pop and emotional R&B collide here. The production feels glossy and huge,
+              but the writing is haunted, guilty, and raw underneath the shine.
+            </p>
+
+            <div class="theme-grid">
+              <div class="theme-card">
+                <strong>Regret catching up</strong>
+                <span>This era feels like every old decision finally returning all at once.</span>
+              </div>
+
+              <div class="theme-card">
+                <strong>Nightlife as a trap</strong>
+                <span>The city glows beautifully, but it never offers comfort or escape.</span>
+              </div>
+
+              <div class="theme-card">
+                <strong>Dancing through pain</strong>
+                <span>Upbeat movement and emotional devastation exist at the same time.</span>
+              </div>
+
+              <div class="theme-card">
+                <strong>No control left</strong>
+                <span>Unlike previous eras, this one feels like the chaos finally takes over.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-panel panel tracks-panel">
+            <div class="panel-top">
+              <h2>Track Atmosphere</h2>
+            </div>
+
+            <p>
+              These songs feel like chapters in a psychological movie — blood-red, cinematic,
+              emotional, and increasingly desperate as the night goes on.
+            </p>
+
+            <div class="track-list">
+              <div class="track"><span class="track-number">1</span><span class="track-title">Alone Again</span><span class="track-plays">223,111,858</span><span class="track-time">4:10</span></div>
+              <div class="track"><span class="track-number">2</span><span class="track-title">Too Late</span><span class="track-plays">220,961,706</span><span class="track-time">3:59</span></div>
+              <div class="track"><span class="track-number">3</span><span class="track-title">Hardest To Love</span><span class="track-plays">227,399,044</span><span class="track-time">3:31</span></div>
+              <div class="track"><span class="track-number">4</span><span class="track-title">Scared To Live</span><span class="track-plays">195,457,522</span><span class="track-time">3:11</span></div>
+              <div class="track"><span class="track-number">5</span><span class="track-title">Snowchild</span><span class="track-plays">184,880,124</span><span class="track-time">4:07</span></div>
+              <div class="track"><span class="track-number">6</span><span class="track-title">Escape From LA</span><span class="track-plays">223,744,708</span><span class="track-time">5:55</span></div>
+              <div class="track"><span class="track-number">7</span><span class="track-title">Heartless</span><span class="track-plays">1,223,356,524</span><span class="track-time">3:18</span></div>
+              <div class="track"><span class="track-number">8</span><span class="track-title">Faith</span><span class="track-plays">245,500,595</span><span class="track-time">4:43</span></div>
+              <div class="track"><span class="track-number">9</span><span class="track-title">Blinding Lights</span><span class="track-plays">5,375,760,672</span><span class="track-time">3:20</span></div>
+              <div class="track"><span class="track-number">10</span><span class="track-title">In Your Eyes</span><span class="track-plays">1,118,623,488</span><span class="track-time">3:57</span></div>
+              <div class="track"><span class="track-number">11</span><span class="track-title">Save Your Tears</span><span class="track-plays">2,690,070,903</span><span class="track-time">3:35</span></div>
+              <div class="track"><span class="track-number">12</span><span class="track-title">Repeat After Me (Interlude)</span><span class="track-plays">137,739,192</span><span class="track-time">3:15</span></div>
+              <div class="track"><span class="track-number">13</span><span class="track-title">After Hours</span><span class="track-plays">1,326,166,472</span><span class="track-time">6:01</span></div>
+              <div class="track"><span class="track-number">14</span><span class="track-title">Until I Bleed Out</span><span class="track-plays">132,058,192</span><span class="track-time">3:10</span></div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <div class="bottom-nav">
+        <a href="dawn-fm.html">Continue into Dawn FM →</a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const canvas = document.getElementById("afterHoursCanvas");
+    const ctx = canvas.getContext("2d");
+    let fogLayers = [];
+    let bokehLights = [];
+    let streaks = [];
+    let scrollIntensity = 0;
+    let tick = 0;
+
+    function resizeCanvas() {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+      createScene();
+    }
+
+    function createScene() {
+      fogLayers = [];
+      bokehLights = [];
+      streaks = [];
+
+      for (let i = 0; i < 10; i++) {
+        fogLayers.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: 140 + Math.random() * 220,
+          alpha: 0.03 + Math.random() * 0.05,
+          drift: (Math.random() - 0.5) * 0.3
+        });
+      }
+
+      for (let i = 0; i < 18; i++) {
+        bokehLights.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: 20 + Math.random() * 80,
+          alpha: 0.04 + Math.random() * 0.08
+        });
+      }
+
+      for (let i = 0; i < 20; i++) {
+        streaks.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          len: 120 + Math.random() * 240,
+          speed: 1.5 + Math.random() * 2.5,
+          alpha: 0.04 + Math.random() * 0.08
+        });
+      }
+    }
+
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    window.addEventListener("scroll", () => {
+      const maxScroll = document.body.scrollHeight - window.innerHeight;
+      const progress = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+      scrollIntensity = progress;
+    });
+
+    function drawBackgroundGlow() {
+      const gradient = ctx.createRadialGradient(
+        canvas.width * 0.5,
+        canvas.height * 0.35,
+        40,
+        canvas.width * 0.5,
+        canvas.height * 0.35,
+        canvas.width * 0.8
+      );
+
+      gradient.addColorStop(0, `rgba(180,20,20,${0.08 + scrollIntensity * 0.16})`);
+      gradient.addColorStop(0.45, `rgba(120,0,0,${0.08 + scrollIntensity * 0.12})`);
+      gradient.addColorStop(1, "rgba(0,0,0,0)");
+
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function drawFog() {
+      fogLayers.forEach((fog, index) => {
+        fog.x += fog.drift;
+        if (fog.x < -fog.r) fog.x = canvas.width + fog.r;
+        if (fog.x > canvas.width + fog.r) fog.x = -fog.r;
+
+        const grad = ctx.createRadialGradient(
+          fog.x,
+          fog.y,
+          fog.r * 0.1,
+          fog.x,
+          fog.y,
+          fog.r
+        );
+
+        grad.addColorStop(0, `rgba(170,20,20,${fog.alpha + scrollIntensity * 0.04})`);
+        grad.addColorStop(1, "rgba(170,20,20,0)");
+
+        ctx.beginPath();
+        ctx.fillStyle = grad;
+        ctx.arc(fog.x, fog.y, fog.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    }
+
+    function drawBokeh() {
+      bokehLights.forEach((light) => {
+        const pulse = (Math.sin(tick * 0.02 + light.x * 0.01) + 1) / 2;
+        const radius = light.r + pulse * 6;
+
+        const grad = ctx.createRadialGradient(
+          light.x,
+          light.y,
+          radius * 0.15,
+          light.x,
+          light.y,
+          radius
+        );
+
+        grad.addColorStop(0, `rgba(255,120,120,${light.alpha + scrollIntensity * 0.06})`);
+        grad.addColorStop(1, "rgba(255,120,120,0)");
+
+        ctx.beginPath();
+        ctx.fillStyle = grad;
+        ctx.arc(light.x, light.y, radius, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    }
+
+    function drawStreaks() {
+      streaks.forEach((streak) => {
+        streak.x -= streak.speed + scrollIntensity * 4;
+
+        if (streak.x + streak.len < 0) {
+          streak.x = canvas.width + Math.random() * 200;
+          streak.y = Math.random() * canvas.height;
+        }
+
+        const gradient = ctx.createLinearGradient(
+          streak.x,
+          streak.y,
+          streak.x + streak.len,
+          streak.y
+        );
+
+        gradient.addColorStop(0, "rgba(255,50,50,0)");
+        gradient.addColorStop(0.5, `rgba(255,70,70,${streak.alpha + scrollIntensity * 0.08})`);
+        gradient.addColorStop(1, "rgba(255,50,50,0)");
+
+        ctx.strokeStyle = gradient;
+        ctx.lineWidth = 2 + scrollIntensity * 2;
+        ctx.beginPath();
+        ctx.moveTo(streak.x, streak.y);
+        ctx.lineTo(streak.x + streak.len, streak.y);
+        ctx.stroke();
+      });
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      drawBackgroundGlow();
+      drawFog();
+      drawBokeh();
+      drawStreaks();
+
+      tick++;
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+</body>
+</html>

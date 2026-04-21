@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beauty Behind the Madness | The Weeknd</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body.bbtm-page {
+      margin: 0;
+      color: white;
+      font-family: Arial, Helvetica, sans-serif;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at top, rgba(255, 215, 140, 0.10), transparent 22%),
+        linear-gradient(rgba(18, 8, 4, 0.62), rgba(0, 0, 0, 0.84)),
+        url("../images/backgrounds/beauty-behind-the-madness-bg.jpeg") center/cover no-repeat;
+      background-attachment: fixed;
+    }
+
+    .album-page {
+      min-height: 100vh;
+      padding: 2rem 2rem 4rem;
+      position: relative;
+    }
+
+    .album-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .album-topbar a,
+    .bottom-nav a {
+      text-decoration: none;
+      color: white;
+      padding: 0.88rem 1.2rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 210, 130, 0.16);
+      background: rgba(45, 18, 8, 0.34);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: 0.3s ease;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.28);
+    }
+
+    .album-topbar a:hover,
+    .bottom-nav a:hover {
+      transform: translateY(-2px);
+      background: rgba(80, 28, 10, 0.5);
+      border-color: rgba(255, 220, 150, 0.28);
+      box-shadow: 0 0 18px rgba(255, 180, 90, 0.12);
+    }
+
+    .album-shell {
+      width: min(1380px, 96%);
+      margin: 0 auto;
+    }
+
+    .hero-stage {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 1.5rem;
+      align-items: stretch;
+      margin-bottom: 1.6rem;
+    }
+
+    .hero-copy {
+      padding: 0.4rem 0;
+    }
+
+    .album-kicker {
+      text-transform: uppercase;
+      letter-spacing: 5px;
+      font-size: 0.8rem;
+      color: rgba(255, 230, 180, 0.64);
+      margin-bottom: 0.9rem;
+    }
+
+    .hero-copy h1 {
+      font-size: clamp(3.1rem, 7vw, 6.1rem);
+      line-height: 0.95;
+      margin: 0 0 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-shadow: 0 0 22px rgba(255, 190, 90, 0.10);
+    }
+
+    .album-subtitle {
+      max-width: 760px;
+      color: rgba(255, 237, 210, 0.84);
+      line-height: 1.85;
+      font-size: 1.03rem;
+    }
+
+    .spotlight-panel {
+      padding: 1.35rem 1.4rem;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 210, 130, 0.12);
+      background:
+        linear-gradient(145deg, rgba(255, 185, 90, 0.08), rgba(120, 20, 10, 0.06)),
+        rgba(25, 10, 8, 0.42);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.32);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .spotlight-panel h2 {
+      margin: 0 0 0.75rem;
+      font-size: 1.05rem;
+      letter-spacing: 0.3px;
+    }
+
+    .spotlight-panel p {
+      color: rgba(255, 235, 205, 0.8);
+      line-height: 1.8;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+
+    .mood-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+    }
+
+    .mood-tag {
+      padding: 0.58rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(255, 185, 90, 0.10);
+      border: 1px solid rgba(255, 215, 145, 0.14);
+      font-size: 0.84rem;
+      color: rgba(255, 245, 225, 0.94);
+      transition: 0.3s ease;
+    }
+
+    .mood-tag:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 185, 90, 0.18);
+      border-color: rgba(255, 224, 165, 0.24);
+      box-shadow: 0 0 16px rgba(255, 185, 90, 0.08);
+    }
+
+    .visual-stage {
+      position: relative;
+      height: 430px;
+      border-radius: 30px;
+      overflow: hidden;
+      margin-bottom: 1.7rem;
+      background:
+        radial-gradient(circle at 50% 18%, rgba(255, 220, 160, 0.16), transparent 28%),
+        linear-gradient(to bottom, rgba(255, 170, 90, 0.07), rgba(255,255,255,0.012)),
+        rgba(22, 10, 8, 0.46);
+      border: 1px solid rgba(255, 210, 130, 0.12);
+      box-shadow:
+        0 24px 60px rgba(0,0,0,0.34),
+        0 0 28px rgba(255, 180, 90, 0.06);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    #bbtmCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .stage-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% 18%, rgba(255,255,255,0.08), transparent 22%),
+        linear-gradient(to bottom, rgba(255,255,255,0.02), rgba(0,0,0,0.14));
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .stage-center {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      pointer-events: none;
+    }
+
+    .stage-quote {
+      text-transform: uppercase;
+      text-align: center;
+      max-width: 720px;
+      font-size: clamp(1.05rem, 2vw, 1.8rem);
+      line-height: 1.5;
+      letter-spacing: 2px;
+      color: rgba(255, 228, 190, 0.74);
+      text-shadow: 0 0 14px rgba(255, 185, 90, 0.12);
+      padding: 1rem 1.4rem;
+      border-radius: 18px;
+      background: rgba(10, 5, 4, 0.22);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+    }
+
+    .stage-caption {
+      position: absolute;
+      left: 1.2rem;
+      bottom: 1rem;
+      z-index: 3;
+      color: rgba(255, 230, 190, 0.78);
+      font-size: 0.92rem;
+      pointer-events: none;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: 0.85fr 0.85fr 1.3fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .glass-panel {
+      background: rgba(24, 10, 8, 0.44);
+      border: 1px solid rgba(255, 205, 120, 0.08);
+      border-radius: 24px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.32);
+    }
+
+    .panel {
+      padding: 1.45rem;
+    }
+
+    .panel h2 {
+      margin: 0 0 0.65rem;
+      font-size: 1.12rem;
+      letter-spacing: 0.3px;
+    }
+
+    .panel p {
+      color: rgba(255, 236, 205, 0.78);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .theme-stack {
+      display: grid;
+      gap: 0.85rem;
+      margin-top: 0.85rem;
+    }
+
+    .theme-card {
+      padding: 1rem;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255, 205, 120, 0.08);
+      transition: 0.3s ease;
+    }
+
+    .theme-card:hover {
+      transform: translateY(-3px);
+      background: rgba(255, 180, 90, 0.05);
+      border-color: rgba(255, 220, 150, 0.14);
+      box-shadow: 0 0 18px rgba(255, 180, 90, 0.05);
+    }
+
+    .theme-card strong {
+      display: block;
+      margin-bottom: 0.35rem;
+      font-size: 0.95rem;
+      color: rgba(255, 246, 230, 0.96);
+    }
+
+    .theme-card span {
+      color: rgba(255, 232, 200, 0.74);
+      line-height: 1.65;
+      font-size: 0.92rem;
+    }
+
+    .featured-hits {
+      display: grid;
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+
+    .hit-card {
+      padding: 0.95rem 1rem;
+      border-radius: 16px;
+      background:
+        linear-gradient(135deg, rgba(255,190,90,0.08), rgba(120,20,10,0.05)),
+        rgba(255,255,255,0.03);
+      border: 1px solid rgba(255, 210, 130, 0.1);
+      transition: 0.3s ease;
+    }
+
+    .hit-card:hover {
+      transform: translateY(-3px) scale(1.01);
+      box-shadow: 0 0 18px rgba(255, 180, 90, 0.08);
+    }
+
+    .hit-title {
+      display: block;
+      font-size: 0.96rem;
+      color: rgba(255, 247, 234, 0.96);
+      margin-bottom: 0.3rem;
+    }
+
+    .hit-meta {
+      color: rgba(255, 223, 178, 0.66);
+      font-size: 0.86rem;
+    }
+
+    .tracks-panel {
+      padding: 1.45rem;
+    }
+
+    .track-list {
+      display: grid;
+      gap: 0.72rem;
+      margin-top: 1rem;
+    }
+
+    .track {
+      display: grid;
+      grid-template-columns: 40px 1fr 150px auto;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.92rem 1rem;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255, 205, 120, 0.06);
+      transition: 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .track::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,190,90,0.08), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .track:hover {
+      transform: translateX(6px);
+      background: rgba(255, 180, 90, 0.06);
+      border-color: rgba(255, 220, 140, 0.12);
+      box-shadow: 0 0 18px rgba(255, 180, 90, 0.07);
+    }
+
+    .track:hover::before {
+      opacity: 1;
+    }
+
+    .track-number {
+      color: rgba(255, 220, 160, 0.54);
+      font-size: 0.9rem;
+    }
+
+    .track-title {
+      color: rgba(255, 248, 238, 0.95);
+      font-size: 0.97rem;
+    }
+
+    .track-plays {
+      color: rgba(255, 220, 160, 0.58);
+      font-size: 0.88rem;
+      text-align: right;
+    }
+
+    .track-time {
+      color: rgba(255, 220, 160, 0.54);
+      font-size: 0.88rem;
+      text-align: right;
+    }
+
+    .bottom-nav {
+      display: flex;
+      justify-content: center;
+      margin-top: 1.7rem;
+    }
+
+    @media (max-width: 1180px) {
+      .hero-stage,
+      .dashboard {
+        grid-template-columns: 1fr;
+      }
+
+      .visual-stage {
+        height: 390px;
+      }
+
+      .track {
+        grid-template-columns: 40px 1fr auto;
+      }
+
+      .track-plays {
+        display: none;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .album-page {
+        padding: 1.2rem 1rem 2.5rem;
+      }
+
+      .album-topbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .hero-copy h1 {
+        font-size: 2.7rem;
+      }
+
+      .visual-stage {
+        height: 310px;
+      }
+
+      .stage-quote {
+        font-size: 0.95rem;
+        padding: 0.85rem 1rem;
+      }
+
+      .track {
+        grid-template-columns: 28px 1fr;
+      }
+
+      .track-time {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body class="bbtm-page">
+  <main class="album-page">
+    <div class="album-topbar">
+      <a href="kiss-land.html">← Go back to Kiss Land</a>
+      <a href="starboy.html">Enter Starboy →</a>
+    </div>
+
+    <div class="album-shell">
+      <section class="hero-stage">
+        <div class="hero-copy">
+          <p class="album-kicker">Album Experience</p>
+          <h1>Beauty Behind the Madness</h1>
+          <p class="album-subtitle">
+            Beauty Behind the Madness feels like stepping into the spotlight while everything inside is still burning —
+            glamorous, massive, and beautiful on the surface, but unstable and haunted underneath.
+          </p>
+        </div>
+
+        <aside class="spotlight-panel">
+          <div>
+            <h2>The Core Feeling</h2>
+            <p>
+              Fame finally hits, but it comes with pressure, temptation, obsession, and chaos.
+              This is power and beauty colliding with self-destruction in full public view.
+            </p>
+          </div>
+
+          <div class="mood-tags">
+            <div class="mood-tag">Fame</div>
+            <div class="mood-tag">Power</div>
+            <div class="mood-tag">Temptation</div>
+            <div class="mood-tag">Beauty vs. madness</div>
+            <div class="mood-tag">Public chaos</div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="visual-stage">
+        <canvas id="bbtmCanvas"></canvas>
+        <div class="stage-overlay"></div>
+
+        <div class="stage-center">
+          <div class="stage-quote">fame looks beautiful until you see what’s behind it</div>
+        </div>
+
+        <div class="stage-caption">
+          Gold embers and light trails shimmer through darkness like success hiding something heavier beneath.
+        </div>
+      </section>
+
+      <section class="dashboard">
+        <div class="glass-panel panel">
+          <h2>Sound & Atmosphere</h2>
+          <p>
+            Beauty Behind the Madness sounds polished, radio-sized, and cinematic, but it never loses
+            the darkness underneath. The hooks are bigger, the production is brighter, and the emotional weight is still there.
+          </p>
+
+          <div class="theme-stack">
+            <div class="theme-card">
+              <strong>Darkness wrapped in beauty</strong>
+              <span>The songs are catchy and dramatic, but the undertone is still heavy, toxic, and burning.</span>
+            </div>
+
+            <div class="theme-card">
+              <strong>Spotlight intensity</strong>
+              <span>This album feels less like drifting and more like standing under blinding lights with nowhere to hide.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-panel panel">
+          <h2>Featured Hits</h2>
+          <p>
+            This era is where the darkness becomes massive, public, and unforgettable.
+          </p>
+
+          <div class="featured-hits">
+            <div class="hit-card">
+              <span class="hit-title">The Hills</span>
+              <span class="hit-meta">3,013,284,679 plays • 4:02</span>
+            </div>
+            <div class="hit-card">
+              <span class="hit-title">Can’t Feel My Face</span>
+              <span class="hit-meta">2,159,462,191 plays • 3:33</span>
+            </div>
+            <div class="hit-card">
+              <span class="hit-title">Earned It</span>
+              <span class="hit-meta">2,126,305,319 plays • 4:37</span>
+            </div>
+            <div class="hit-card">
+              <span class="hit-title">In The Night</span>
+              <span class="hit-meta">647,117,986 plays • 3:55</span>
+            </div>
+          </div>
+
+          <div class="theme-stack">
+            <div class="theme-card">
+              <strong>Toxic attraction</strong>
+              <span>Love, obsession, lust, and danger all blur together in a beautiful but destructive way.</span>
+            </div>
+
+            <div class="theme-card">
+              <strong>Duality in full view</strong>
+              <span>This era does not hide the darkness anymore — it performs it in front of everyone.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tracks-panel glass-panel">
+          <h2>Track Atmosphere</h2>
+          <p>
+            These songs feel like moments inside a giant, glamorous breakdown — bold, emotional, addictive,
+            and impossible to separate from the darkness behind them.
+          </p>
+
+          <div class="track-list">
+            <div class="track"><span class="track-number">1</span><span class="track-title">Real Life</span><span class="track-plays">146,273,814</span><span class="track-time">3:43</span></div>
+            <div class="track"><span class="track-number">2</span><span class="track-title">Losers</span><span class="track-plays">142,228,350</span><span class="track-time">4:41</span></div>
+            <div class="track"><span class="track-number">3</span><span class="track-title">Tell Your Friends</span><span class="track-plays">301,413,336</span><span class="track-time">5:34</span></div>
+            <div class="track"><span class="track-number">4</span><span class="track-title">Often</span><span class="track-plays">1,280,767,852</span><span class="track-time">4:09</span></div>
+            <div class="track"><span class="track-number">5</span><span class="track-title">The Hills</span><span class="track-plays">3,013,284,679</span><span class="track-time">4:02</span></div>
+            <div class="track"><span class="track-number">6</span><span class="track-title">Acquainted</span><span class="track-plays">604,822,365</span><span class="track-time">5:48</span></div>
+            <div class="track"><span class="track-number">7</span><span class="track-title">Can’t Feel My Face</span><span class="track-plays">2,159,462,191</span><span class="track-time">3:33</span></div>
+            <div class="track"><span class="track-number">8</span><span class="track-title">Shameless</span><span class="track-plays">245,591,945</span><span class="track-time">4:13</span></div>
+            <div class="track"><span class="track-number">9</span><span class="track-title">Earned It</span><span class="track-plays">2,126,305,319</span><span class="track-time">4:37</span></div>
+            <div class="track"><span class="track-number">10</span><span class="track-title">In The Night</span><span class="track-plays">647,117,986</span><span class="track-time">3:55</span></div>
+            <div class="track"><span class="track-number">11</span><span class="track-title">As You Are</span><span class="track-plays">180,865,264</span><span class="track-time">5:40</span></div>
+            <div class="track"><span class="track-number">12</span><span class="track-title">Dark Times</span><span class="track-plays">280,222,908</span><span class="track-time">4:20</span></div>
+            <div class="track"><span class="track-number">13</span><span class="track-title">Prisoner</span><span class="track-plays">233,948,894</span><span class="track-time">4:34</span></div>
+            <div class="track"><span class="track-number">14</span><span class="track-title">Angel</span><span class="track-plays">155,048,861</span><span class="track-time">6:17</span></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="bottom-nav">
+        <a href="starboy.html">Enter Starboy →</a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const canvas = document.getElementById("bbtmCanvas");
+    const ctx = canvas.getContext("2d");
+
+    let embers = [];
+    let trails = [];
+    let mouseX = 0;
+    let mouseY = 0;
+
+    function resizeCanvas() {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+      createEmbers();
+    }
+
+    function createEmbers() {
+      embers = [];
+      const total = 90;
+
+      for (let i = 0; i < total; i++) {
+        embers.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: 1 + Math.random() * 3.8,
+          speedY: 0.2 + Math.random() * 0.85,
+          driftX: (Math.random() - 0.5) * 0.35,
+          alpha: 0.22 + Math.random() * 0.42
+        });
+      }
+    }
+
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    canvas.addEventListener("mousemove", (e) => {
+      const rect = canvas.getBoundingClientRect();
+      mouseX = e.clientX - rect.left;
+      mouseY = e.clientY - rect.top;
+
+      for (let i = 0; i < 4; i++) {
+        trails.push({
+          x: mouseX + (Math.random() - 0.5) * 18,
+          y: mouseY + (Math.random() - 0.5) * 18,
+          r: 8 + Math.random() * 12,
+          alpha: 0.2 + Math.random() * 0.14
+        });
+      }
+    });
+
+    function drawSpotlight() {
+      const gradient = ctx.createRadialGradient(
+        canvas.width * 0.5,
+        canvas.height * 0.12,
+        20,
+        canvas.width * 0.5,
+        canvas.height * 0.12,
+        canvas.height * 0.8
+      );
+
+      gradient.addColorStop(0, "rgba(255,225,170,0.18)");
+      gradient.addColorStop(0.28, "rgba(255,185,90,0.10)");
+      gradient.addColorStop(1, "rgba(0,0,0,0)");
+
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function drawEmbers() {
+      embers.forEach((ember) => {
+        ember.y -= ember.speedY;
+        ember.x += ember.driftX;
+
+        if (ember.y < -10) {
+          ember.y = canvas.height + 10;
+          ember.x = Math.random() * canvas.width;
+        }
+
+        if (ember.x < -12) ember.x = canvas.width + 12;
+        if (ember.x > canvas.width + 12) ember.x = -12;
+
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,190,90,${ember.alpha})`;
+        ctx.shadowBlur = 16;
+        ctx.shadowColor = "rgba(255,160,60,0.42)";
+        ctx.arc(ember.x, ember.y, ember.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      ctx.shadowBlur = 0;
+    }
+
+    function drawTrails() {
+      for (let i = trails.length - 1; i >= 0; i--) {
+        const trail = trails[i];
+
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,220,170,${trail.alpha})`;
+        ctx.shadowBlur = 24;
+        ctx.shadowColor = "rgba(255,200,100,0.34)";
+        ctx.arc(trail.x, trail.y, trail.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        trail.alpha *= 0.94;
+        trail.r *= 0.98;
+
+        if (trail.alpha < 0.02) {
+          trails.splice(i, 1);
+        }
+      }
+
+      ctx.shadowBlur = 0;
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawSpotlight();
+      drawEmbers();
+      drawTrails();
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+</body>
+</html>
